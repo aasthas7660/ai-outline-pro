@@ -92,7 +92,7 @@ export const generateOutline = createServerFn({ method: "POST" })
         tone: data.tone,
         audience: data.audience,
         length: data.length,
-        content: content as unknown as Record<string, unknown>,
+        content: JSON.parse(JSON.stringify(content)),
       })
       .select("id")
       .single();
