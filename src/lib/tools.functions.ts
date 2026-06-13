@@ -11,17 +11,20 @@ export const TOOL_TYPES = [
   "summary_generator",
   "faq_generator",
   "table_generator",
+  "competitor_analysis",
+  "schema_generator",
+  "internal_links",
+  "content_calendar",
 ] as const;
 export type ToolType = (typeof TOOL_TYPES)[number];
 
 const RunSchema = z.object({
   tool_type: z.enum(TOOL_TYPES),
   topic: z.string().min(2).max(500),
-  // optional context fields used by some tools
   audience: z.string().max(120).optional(),
   tone: z.string().max(60).optional(),
   language: z.string().max(40).optional().default("English"),
-  extra: z.string().max(500).optional(),
+  extra: z.string().max(2000).optional(),
 });
 
 type RunInput = z.infer<typeof RunSchema>;
@@ -40,32 +43,31 @@ ${ctx}
 Schema:
 {
   "primary_keyword": string,
-  "secondary_keywords": string[],        // 5-8
-  "long_tail_keywords": string[],        // 5-8
-  "semantic_keywords": string[],         // 6-10 LSI/related
+  "secondary_keywords": string[],
+  "long_tail_keywords": string[],
+  "semantic_keywords": string[],
   "search_intent": "informational" | "navigational" | "transactional" | "commercial",
-  "seo_score": number,                   // 0-100 realistic estimate for this topic difficulty
-  "recommended_word_count": number,      // realistic e.g. 1200
-  "url_slug": string,                    // kebab-case, no stopwords
-  "meta_title": string,                  // <= 60 chars
-  "meta_description": string             // <= 160 chars
+  "seo_score": number,
+  "recommended_word_count": number,
+  "url_slug": string,
+  "meta_title": string,
+  "meta_description": string
 }`;
     case "title_generator":
       return `Generate 10 SEO-friendly, click-worthy blog titles.
 ${ctx}
 
-Schema:
-{ "titles": string[] }   // exactly 10`;
+Schema: { "titles": string[] }`;
     case "hook_generator":
       return `Write powerful opening hooks for a blog post.
 ${ctx}
 
 Schema:
 {
-  "question_hooks": string[],   // 3
-  "story_hooks": string[],      // 3
-  "curiosity_hooks": string[],  // 3
-  "statistic_hooks": string[]   // 3
+  "question_hooks": string[],
+  "story_hooks": string[],
+  "curiosity_hooks": string[],
+  "statistic_hooks": string[]
 }`;
     case "cta_generator":
       return `Write compelling calls-to-action.
@@ -73,9 +75,9 @@ ${ctx}
 
 Schema:
 {
-  "soft_cta": string[],         // 3 gentle/low-friction
-  "strong_cta": string[],       // 3 urgent/direct
-  "newsletter_cta": string[]    // 3 email signup focused
+  "soft_cta": string[],
+  "strong_cta": string[],
+  "newsletter_cta": string[]
 }`;
     case "summary_generator":
       return `Summarize the topic into multiple formats.
@@ -83,16 +85,15 @@ ${ctx}
 
 Schema:
 {
-  "short_summary": string,           // 2-3 sentences
-  "bullet_summary": string[],        // 5-7 bullets
-  "key_takeaways": string[]          // 4-6 takeaways
+  "short_summary": string,
+  "bullet_summary": string[],
+  "key_takeaways": string[]
 }`;
     case "faq_generator":
       return `Generate FAQs relevant to the topic.
 ${ctx}
 
-Schema:
-{ "faqs": [ { "question": string, "answer": string } ] }   // 8 items`;
+Schema: { "faqs": [ { "question": string, "answer": string } ] }`;
     case "table_generator":
       return `Generate a useful comparison/information table relevant to the topic.
 ${ctx}
@@ -101,8 +102,51 @@ Schema:
 {
   "title": string,
   "type": "comparison" | "information",
-  "columns": string[],                  // 3-5
-  "rows": string[][]                    // 4-8 rows; each row length == columns length
+  "columns": string[],
+  "rows": string[][]
+}`;
+    case "competitor_analysis":
+      return `Act as a senior SEO content strategist. Analyze the competitive landscape for the topic and surface opportunities.
+${ctx}
+
+Schema:
+{
+  "competitor_headings": string[],          // 8-12 H2-style headings commonly used by top-ranking competitors
+  "missing_sections": string[],             // 5-8 angles competitors miss that you should cover
+  "snippet_opportunities": [                 // 4-6 featured-snippet plays
+    { "type": "paragraph" | "list" | "table", "query": string, "suggested_answer": string }
+  ],
+  "people_also_ask": string[]               // 8-10 PAA-style questions
+}`;
+    case "schema_generator":
+      return `Generate three Schema.org JSON-LD blocks for a blog article about the topic. Use realistic placeholder values where needed.
+${ctx}
+
+Schema:
+{
+  "faq_schema": object,        // valid JSON-LD with @context, @type "FAQPage", mainEntity Question/Answer
+  "article_schema": object,    // valid JSON-LD with @context, @type "Article" (headline, description, author, datePublished, image)
+  "breadcrumb_schema": object  // valid JSON-LD with @context, @type "BreadcrumbList", itemListElement
+}`;
+    case "internal_links":
+      return `Suggest internal link anchor texts, related article ideas, and authoritative external references for the topic.
+${ctx}
+
+Schema:
+{
+  "anchor_texts": string[],                                              // 8-10 natural anchor text phrases
+  "related_articles": [ { "title": string, "reason": string } ],        // 6-8 related post ideas
+  "external_references": [ { "title": string, "url": string, "why": string } ]   // 5-7 authoritative sources (real, well-known sites)
+}`;
+    case "content_calendar":
+      return `Create a structured content calendar for the topic / niche.
+${ctx}
+
+Schema:
+{
+  "weekly": [ { "day": string, "title": string, "type": string } ],                 // 5-7 items, mon-sun
+  "monthly": [ { "week": string, "theme": string, "posts": [ { "title": string, "type": string } ] } ], // 4 weeks
+  "publishing_schedule": [ { "day": string, "time": string, "channel": string } ]   // 4-6 recurring slots
 }`;
   }
 }
