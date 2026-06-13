@@ -20,6 +20,7 @@ import { Route as AuthenticatedNewRouteImport } from './routes/_authenticated/ne
 import { Route as AuthenticatedInternalLinksRouteImport } from './routes/_authenticated/internal-links'
 import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
 import { Route as AuthenticatedFavoritesRouteImport } from './routes/_authenticated/favorites'
+import { Route as AuthenticatedExportCenterRouteImport } from './routes/_authenticated/export-center'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedContentToolsRouteImport } from './routes/_authenticated/content-tools'
 import { Route as AuthenticatedContentCalendarRouteImport } from './routes/_authenticated/content-calendar'
@@ -81,6 +82,12 @@ const AuthenticatedFavoritesRoute = AuthenticatedFavoritesRouteImport.update({
   path: '/favorites',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedExportCenterRoute =
+  AuthenticatedExportCenterRouteImport.update({
+    id: '/export-center',
+    path: '/export-center',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -113,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/content-calendar': typeof AuthenticatedContentCalendarRoute
   '/content-tools': typeof AuthenticatedContentToolsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/export-center': typeof AuthenticatedExportCenterRoute
   '/favorites': typeof AuthenticatedFavoritesRoute
   '/history': typeof AuthenticatedHistoryRoute
   '/internal-links': typeof AuthenticatedInternalLinksRoute
@@ -129,6 +137,7 @@ export interface FileRoutesByTo {
   '/content-calendar': typeof AuthenticatedContentCalendarRoute
   '/content-tools': typeof AuthenticatedContentToolsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/export-center': typeof AuthenticatedExportCenterRoute
   '/favorites': typeof AuthenticatedFavoritesRoute
   '/history': typeof AuthenticatedHistoryRoute
   '/internal-links': typeof AuthenticatedInternalLinksRoute
@@ -147,6 +156,7 @@ export interface FileRoutesById {
   '/_authenticated/content-calendar': typeof AuthenticatedContentCalendarRoute
   '/_authenticated/content-tools': typeof AuthenticatedContentToolsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/export-center': typeof AuthenticatedExportCenterRoute
   '/_authenticated/favorites': typeof AuthenticatedFavoritesRoute
   '/_authenticated/history': typeof AuthenticatedHistoryRoute
   '/_authenticated/internal-links': typeof AuthenticatedInternalLinksRoute
@@ -165,6 +175,7 @@ export interface FileRouteTypes {
     | '/content-calendar'
     | '/content-tools'
     | '/dashboard'
+    | '/export-center'
     | '/favorites'
     | '/history'
     | '/internal-links'
@@ -181,6 +192,7 @@ export interface FileRouteTypes {
     | '/content-calendar'
     | '/content-tools'
     | '/dashboard'
+    | '/export-center'
     | '/favorites'
     | '/history'
     | '/internal-links'
@@ -198,6 +210,7 @@ export interface FileRouteTypes {
     | '/_authenticated/content-calendar'
     | '/_authenticated/content-tools'
     | '/_authenticated/dashboard'
+    | '/_authenticated/export-center'
     | '/_authenticated/favorites'
     | '/_authenticated/history'
     | '/_authenticated/internal-links'
@@ -293,6 +306,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedFavoritesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/export-center': {
+      id: '/_authenticated/export-center'
+      path: '/export-center'
+      fullPath: '/export-center'
+      preLoaderRoute: typeof AuthenticatedExportCenterRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -329,6 +349,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedContentCalendarRoute: typeof AuthenticatedContentCalendarRoute
   AuthenticatedContentToolsRoute: typeof AuthenticatedContentToolsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedExportCenterRoute: typeof AuthenticatedExportCenterRoute
   AuthenticatedFavoritesRoute: typeof AuthenticatedFavoritesRoute
   AuthenticatedHistoryRoute: typeof AuthenticatedHistoryRoute
   AuthenticatedInternalLinksRoute: typeof AuthenticatedInternalLinksRoute
@@ -343,6 +364,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedContentCalendarRoute: AuthenticatedContentCalendarRoute,
   AuthenticatedContentToolsRoute: AuthenticatedContentToolsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedExportCenterRoute: AuthenticatedExportCenterRoute,
   AuthenticatedFavoritesRoute: AuthenticatedFavoritesRoute,
   AuthenticatedHistoryRoute: AuthenticatedHistoryRoute,
   AuthenticatedInternalLinksRoute: AuthenticatedInternalLinksRoute,
