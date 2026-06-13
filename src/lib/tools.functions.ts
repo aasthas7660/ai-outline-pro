@@ -133,13 +133,14 @@ export const runTool = createServerFn({ method: "POST" })
     }
 
     const raw = result.text.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/i, "").trim();
-    let output: Record<string, unknown>;
+    type JsonValue = string | number | boolean | null | JsonValue[] | { [k: string]: JsonValue };
+    let output: JsonValue;
     try {
-      output = JSON.parse(raw) as Record<string, unknown>;
+      output = JSON.parse(raw) as JsonValue;
     } catch {
       const m = raw.match(/\{[\s\S]*\}/);
       if (!m) throw new Error("AI returned an invalid response. Please retry.");
-      output = JSON.parse(m[0]) as Record<string, unknown>;
+      output = JSON.parse(m[0]) as JsonValue;
     }
 
     const insert = await context.supabase
