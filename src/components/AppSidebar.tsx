@@ -1,5 +1,8 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { LayoutDashboard, Sparkles, History, Star, Settings, LogOut, Search, Wand2 } from "lucide-react";
+import {
+  LayoutDashboard, Sparkles, History, Star, Settings, LogOut, Search, Wand2,
+  Users, Code2, CalendarDays, Link as LinkIcon, Download,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -15,20 +18,27 @@ import {
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useT } from "@/lib/preferences";
 
 const items = [
-  { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "New Outline", url: "/new", icon: Sparkles },
-  { title: "SEO Tools", url: "/seo-tools", icon: Search },
-  { title: "Content Tools", url: "/content-tools", icon: Wand2 },
-  { title: "History", url: "/history", icon: History },
-  { title: "Favorites", url: "/favorites", icon: Star },
-  { title: "Settings", url: "/settings", icon: Settings },
+  { key: "nav.dashboard", url: "/dashboard", icon: LayoutDashboard },
+  { key: "nav.new", url: "/new", icon: Sparkles },
+  { key: "nav.seo", url: "/seo-tools", icon: Search },
+  { key: "nav.content", url: "/content-tools", icon: Wand2 },
+  { key: "nav.competitor", url: "/competitor-analysis", icon: Users },
+  { key: "nav.schema", url: "/schema-generator", icon: Code2 },
+  { key: "nav.calendar", url: "/content-calendar", icon: CalendarDays },
+  { key: "nav.links", url: "/internal-links", icon: LinkIcon },
+  { key: "nav.export", url: "/export-center", icon: Download },
+  { key: "nav.history", url: "/history", icon: History },
+  { key: "nav.favorites", url: "/favorites", icon: Star },
+  { key: "nav.settings", url: "/settings", icon: Settings },
 ] as const;
 
 export function AppSidebar() {
   const path = useRouterState({ select: (r) => r.location.pathname });
   const navigate = useNavigate();
+  const t = useT();
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -49,7 +59,7 @@ export function AppSidebar() {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Workspace</SidebarGroupLabel>
+          <SidebarGroupLabel>{t("nav.workspace")}</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -57,7 +67,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild isActive={path === item.url}>
                     <Link to={item.url} className="flex items-center gap-2">
                       <item.icon className="h-4 w-4" />
-                      <span>{item.title}</span>
+                      <span>{t(item.key)}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -70,7 +80,7 @@ export function AppSidebar() {
       <SidebarFooter className="border-t border-sidebar-border">
         <Button variant="ghost" size="sm" className="justify-start gap-2" onClick={signOut}>
           <LogOut className="h-4 w-4" />
-          Sign out
+          {t("nav.signout")}
         </Button>
       </SidebarFooter>
     </Sidebar>
