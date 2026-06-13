@@ -1,5 +1,5 @@
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
-import { LayoutDashboard, Sparkles, History, Star, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, Sparkles, History, Star, Settings, LogOut, Search, Wand2 } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -19,6 +19,8 @@ import { toast } from "sonner";
 const items = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
   { title: "New Outline", url: "/new", icon: Sparkles },
+  { title: "SEO Tools", url: "/seo-tools", icon: Search },
+  { title: "Content Tools", url: "/content-tools", icon: Wand2 },
   { title: "History", url: "/history", icon: History },
   { title: "Favorites", url: "/favorites", icon: Star },
   { title: "Settings", url: "/settings", icon: Settings },
