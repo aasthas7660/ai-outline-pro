@@ -82,6 +82,7 @@ const DICT: Dict = {
   "nav.links": { en: "Internal Links", hi: "आंतरिक लिंक", mr: "अंतर्गत दुवे" },
   "nav.export": { en: "Export Center", hi: "एक्सपोर्ट सेंटर", mr: "निर्यात केंद्र" },
   "nav.images": { en: "Image Suggestions", hi: "चित्र सुझाव", mr: "प्रतिमा सूचना" },
+  "nav.imagegen": { en: "AI Image Generator", hi: "AI चित्र जनरेटर", mr: "AI प्रतिमा जनरेटर" },
   "nav.gap": { en: "Content Gap", hi: "कंटेंट गैप", mr: "कंटेंट गॅप" },
   "nav.brief": { en: "Content Brief", hi: "कंटेंट ब्रीफ", mr: "कंटेंट ब्रीफ" },
   "nav.history": { en: "History", hi: "इतिहास", mr: "इतिहास" },
