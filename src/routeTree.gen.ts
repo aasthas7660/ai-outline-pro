@@ -18,12 +18,15 @@ import { Route as AuthenticatedSeoToolsRouteImport } from './routes/_authenticat
 import { Route as AuthenticatedSchemaGeneratorRouteImport } from './routes/_authenticated/schema-generator'
 import { Route as AuthenticatedNewRouteImport } from './routes/_authenticated/new'
 import { Route as AuthenticatedInternalLinksRouteImport } from './routes/_authenticated/internal-links'
+import { Route as AuthenticatedImageSuggestionsRouteImport } from './routes/_authenticated/image-suggestions'
 import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
 import { Route as AuthenticatedFavoritesRouteImport } from './routes/_authenticated/favorites'
 import { Route as AuthenticatedExportCenterRouteImport } from './routes/_authenticated/export-center'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedContentToolsRouteImport } from './routes/_authenticated/content-tools'
+import { Route as AuthenticatedContentGapRouteImport } from './routes/_authenticated/content-gap'
 import { Route as AuthenticatedContentCalendarRouteImport } from './routes/_authenticated/content-calendar'
+import { Route as AuthenticatedContentBriefRouteImport } from './routes/_authenticated/content-brief'
 import { Route as AuthenticatedCompetitorAnalysisRouteImport } from './routes/_authenticated/competitor-analysis'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -72,6 +75,12 @@ const AuthenticatedInternalLinksRoute =
     path: '/internal-links',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedImageSuggestionsRoute =
+  AuthenticatedImageSuggestionsRouteImport.update({
+    id: '/image-suggestions',
+    path: '/image-suggestions',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedHistoryRoute = AuthenticatedHistoryRouteImport.update({
   id: '/history',
   path: '/history',
@@ -99,10 +108,21 @@ const AuthenticatedContentToolsRoute =
     path: '/content-tools',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedContentGapRoute = AuthenticatedContentGapRouteImport.update({
+  id: '/content-gap',
+  path: '/content-gap',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedContentCalendarRoute =
   AuthenticatedContentCalendarRouteImport.update({
     id: '/content-calendar',
     path: '/content-calendar',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedContentBriefRoute =
+  AuthenticatedContentBriefRouteImport.update({
+    id: '/content-brief',
+    path: '/content-brief',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedCompetitorAnalysisRoute =
@@ -117,12 +137,15 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/competitor-analysis': typeof AuthenticatedCompetitorAnalysisRoute
+  '/content-brief': typeof AuthenticatedContentBriefRoute
   '/content-calendar': typeof AuthenticatedContentCalendarRoute
+  '/content-gap': typeof AuthenticatedContentGapRoute
   '/content-tools': typeof AuthenticatedContentToolsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/export-center': typeof AuthenticatedExportCenterRoute
   '/favorites': typeof AuthenticatedFavoritesRoute
   '/history': typeof AuthenticatedHistoryRoute
+  '/image-suggestions': typeof AuthenticatedImageSuggestionsRoute
   '/internal-links': typeof AuthenticatedInternalLinksRoute
   '/new': typeof AuthenticatedNewRoute
   '/schema-generator': typeof AuthenticatedSchemaGeneratorRoute
@@ -134,12 +157,15 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/competitor-analysis': typeof AuthenticatedCompetitorAnalysisRoute
+  '/content-brief': typeof AuthenticatedContentBriefRoute
   '/content-calendar': typeof AuthenticatedContentCalendarRoute
+  '/content-gap': typeof AuthenticatedContentGapRoute
   '/content-tools': typeof AuthenticatedContentToolsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/export-center': typeof AuthenticatedExportCenterRoute
   '/favorites': typeof AuthenticatedFavoritesRoute
   '/history': typeof AuthenticatedHistoryRoute
+  '/image-suggestions': typeof AuthenticatedImageSuggestionsRoute
   '/internal-links': typeof AuthenticatedInternalLinksRoute
   '/new': typeof AuthenticatedNewRoute
   '/schema-generator': typeof AuthenticatedSchemaGeneratorRoute
@@ -153,12 +179,15 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/competitor-analysis': typeof AuthenticatedCompetitorAnalysisRoute
+  '/_authenticated/content-brief': typeof AuthenticatedContentBriefRoute
   '/_authenticated/content-calendar': typeof AuthenticatedContentCalendarRoute
+  '/_authenticated/content-gap': typeof AuthenticatedContentGapRoute
   '/_authenticated/content-tools': typeof AuthenticatedContentToolsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/export-center': typeof AuthenticatedExportCenterRoute
   '/_authenticated/favorites': typeof AuthenticatedFavoritesRoute
   '/_authenticated/history': typeof AuthenticatedHistoryRoute
+  '/_authenticated/image-suggestions': typeof AuthenticatedImageSuggestionsRoute
   '/_authenticated/internal-links': typeof AuthenticatedInternalLinksRoute
   '/_authenticated/new': typeof AuthenticatedNewRoute
   '/_authenticated/schema-generator': typeof AuthenticatedSchemaGeneratorRoute
@@ -172,12 +201,15 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/competitor-analysis'
+    | '/content-brief'
     | '/content-calendar'
+    | '/content-gap'
     | '/content-tools'
     | '/dashboard'
     | '/export-center'
     | '/favorites'
     | '/history'
+    | '/image-suggestions'
     | '/internal-links'
     | '/new'
     | '/schema-generator'
@@ -189,12 +221,15 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/competitor-analysis'
+    | '/content-brief'
     | '/content-calendar'
+    | '/content-gap'
     | '/content-tools'
     | '/dashboard'
     | '/export-center'
     | '/favorites'
     | '/history'
+    | '/image-suggestions'
     | '/internal-links'
     | '/new'
     | '/schema-generator'
@@ -207,12 +242,15 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/_authenticated/competitor-analysis'
+    | '/_authenticated/content-brief'
     | '/_authenticated/content-calendar'
+    | '/_authenticated/content-gap'
     | '/_authenticated/content-tools'
     | '/_authenticated/dashboard'
     | '/_authenticated/export-center'
     | '/_authenticated/favorites'
     | '/_authenticated/history'
+    | '/_authenticated/image-suggestions'
     | '/_authenticated/internal-links'
     | '/_authenticated/new'
     | '/_authenticated/schema-generator'
@@ -292,6 +330,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedInternalLinksRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/image-suggestions': {
+      id: '/_authenticated/image-suggestions'
+      path: '/image-suggestions'
+      fullPath: '/image-suggestions'
+      preLoaderRoute: typeof AuthenticatedImageSuggestionsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/history': {
       id: '/_authenticated/history'
       path: '/history'
@@ -327,11 +372,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedContentToolsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/content-gap': {
+      id: '/_authenticated/content-gap'
+      path: '/content-gap'
+      fullPath: '/content-gap'
+      preLoaderRoute: typeof AuthenticatedContentGapRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/content-calendar': {
       id: '/_authenticated/content-calendar'
       path: '/content-calendar'
       fullPath: '/content-calendar'
       preLoaderRoute: typeof AuthenticatedContentCalendarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/content-brief': {
+      id: '/_authenticated/content-brief'
+      path: '/content-brief'
+      fullPath: '/content-brief'
+      preLoaderRoute: typeof AuthenticatedContentBriefRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/competitor-analysis': {
@@ -346,12 +405,15 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedCompetitorAnalysisRoute: typeof AuthenticatedCompetitorAnalysisRoute
+  AuthenticatedContentBriefRoute: typeof AuthenticatedContentBriefRoute
   AuthenticatedContentCalendarRoute: typeof AuthenticatedContentCalendarRoute
+  AuthenticatedContentGapRoute: typeof AuthenticatedContentGapRoute
   AuthenticatedContentToolsRoute: typeof AuthenticatedContentToolsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedExportCenterRoute: typeof AuthenticatedExportCenterRoute
   AuthenticatedFavoritesRoute: typeof AuthenticatedFavoritesRoute
   AuthenticatedHistoryRoute: typeof AuthenticatedHistoryRoute
+  AuthenticatedImageSuggestionsRoute: typeof AuthenticatedImageSuggestionsRoute
   AuthenticatedInternalLinksRoute: typeof AuthenticatedInternalLinksRoute
   AuthenticatedNewRoute: typeof AuthenticatedNewRoute
   AuthenticatedSchemaGeneratorRoute: typeof AuthenticatedSchemaGeneratorRoute
@@ -361,12 +423,15 @@ interface AuthenticatedRouteRouteChildren {
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCompetitorAnalysisRoute: AuthenticatedCompetitorAnalysisRoute,
+  AuthenticatedContentBriefRoute: AuthenticatedContentBriefRoute,
   AuthenticatedContentCalendarRoute: AuthenticatedContentCalendarRoute,
+  AuthenticatedContentGapRoute: AuthenticatedContentGapRoute,
   AuthenticatedContentToolsRoute: AuthenticatedContentToolsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedExportCenterRoute: AuthenticatedExportCenterRoute,
   AuthenticatedFavoritesRoute: AuthenticatedFavoritesRoute,
   AuthenticatedHistoryRoute: AuthenticatedHistoryRoute,
+  AuthenticatedImageSuggestionsRoute: AuthenticatedImageSuggestionsRoute,
   AuthenticatedInternalLinksRoute: AuthenticatedInternalLinksRoute,
   AuthenticatedNewRoute: AuthenticatedNewRoute,
   AuthenticatedSchemaGeneratorRoute: AuthenticatedSchemaGeneratorRoute,
