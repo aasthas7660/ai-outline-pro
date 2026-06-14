@@ -385,7 +385,7 @@ function ImageGeneratorPage() {
                 Generate
               </Button>
               {items.length > 0 && !busy && (
-                <Button type="button" variant="outline" onClick={onGenerate as unknown as () => void}>
+                <Button type="button" variant="outline" onClick={() => { const f = document.createElement("form"); void onGenerate({ preventDefault: () => {}, currentTarget: f, target: f } as unknown as React.FormEvent); }}>
                   <RefreshCw className="mr-2 h-4 w-4" /> Regenerate all
                 </Button>
               )}
