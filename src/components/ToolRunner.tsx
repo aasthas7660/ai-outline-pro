@@ -616,7 +616,8 @@ export const imagesToMarkdown = (out: JsonValue) => {
 };
 
 /* Content Gap */
-import { Progress } from "@/components/ui/progress";
+
+
 function ScoreBar({ label, value }: { label: string; value: number }) {
   return (
     <div className="space-y-1.5">
