@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
 import {
   planImages,
@@ -532,5 +531,3 @@ function ImageGeneratorPage() {
   );
 }
 
-// silence unused warning for useMutation import in some lint configs
-void useMutation;
