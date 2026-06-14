@@ -560,6 +560,245 @@ export const calendarToMarkdown = (out: JsonValue) => {
   ].join("\n");
 };
 
+/* Image Suggestions */
+function ImageCard({ s }: { s: Record<string, JsonValue> }) {
+  return (
+    <div className="rounded-lg border border-border bg-muted/30 p-4 space-y-2">
+      <div className="flex items-start justify-between gap-3">
+        <p className="font-medium text-sm">{asStr(s.image_title) || asStr(s.title)}</p>
+        <Badge variant="secondary" className="text-[10px] uppercase shrink-0">{asStr(s.image_type) || asStr(s.type)}</Badge>
+      </div>
+      {asStr(s.section_name) && <p className="text-[11px] uppercase tracking-wide text-muted-foreground">{asStr(s.section_name)}</p>}
+      <p className="text-sm text-muted-foreground">{asStr(s.image_description) || asStr(s.description)}</p>
+      <p className="text-xs"><span className="font-semibold text-muted-foreground">Alt:</span> <span className="italic">{asStr(s.alt_text)}</span></p>
+    </div>
+  );
+}
+export function renderImages(out: JsonValue) {
+  const o = asObj(out);
+  const sections = asArr(o.sections).map(asObj);
+  const featured = asObj(o.featured_image);
+  const social = asObj(o.social_thumbnail);
+  return (
+    <div className="space-y-5">
+      <div className="grid gap-3 md:grid-cols-2">
+        <div className="space-y-1">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Featured image</p>
+          <ImageCard s={featured} />
+        </div>
+        <div className="space-y-1">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Social thumbnail</p>
+          <ImageCard s={social} />
+        </div>
+      </div>
+      <div className="space-y-2">
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Section images</p>
+        <div className="grid gap-3 md:grid-cols-2">
+          {sections.map((s, i) => <ImageCard key={i} s={s} />)}
+        </div>
+      </div>
+    </div>
+  );
+}
+export const imagesToMarkdown = (out: JsonValue) => {
+  const o = asObj(out);
+  const f = asObj(o.featured_image);
+  const s = asObj(o.social_thumbnail);
+  const sections = asArr(o.sections).map(asObj);
+  const fmt = (x: Record<string, JsonValue>) =>
+    `- **${asStr(x.image_title) || asStr(x.title)}** _(${asStr(x.image_type) || asStr(x.type)})_\n  ${asStr(x.image_description) || asStr(x.description)}\n  Alt: ${asStr(x.alt_text)}`;
+  return [
+    `## Featured image`, fmt(f), ``,
+    `## Social thumbnail`, fmt(s), ``,
+    `## Section images`, ...sections.map((x) => `### ${asStr(x.section_name)}\n${fmt(x)}`),
+  ].join("\n");
+};
+
+/* Content Gap */
+import { Progress } from "@/components/ui/progress";
+function ScoreBar({ label, value }: { label: string; value: number }) {
+  return (
+    <div className="space-y-1.5">
+      <div className="flex justify-between text-xs"><span className="text-muted-foreground">{label}</span><span className="font-semibold">{value}/100</span></div>
+      <Progress value={Math.max(0, Math.min(100, value))} />
+    </div>
+  );
+}
+export function renderGap(out: JsonValue) {
+  const o = asObj(out);
+  const score = Number(o.content_score) || 0;
+  const seo = Number(o.seo_coverage) || 0;
+  const topic = Number(o.topic_coverage) || 0;
+  const kw = asObj(o.missing_keywords);
+  const rec = asObj(o.recommendations);
+  const faqs = asArr(o.missing_faqs).map(asObj);
+  return (
+    <div className="space-y-6">
+      <div className="grid gap-4 md:grid-cols-3">
+        <div className="rounded-lg border border-border bg-muted/30 p-4 text-center">
+          <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Content Score</p>
+          <p className="font-display text-4xl mt-1">{score}<span className="text-base text-muted-foreground">/100</span></p>
+        </div>
+        <div className="rounded-lg border border-border bg-muted/30 p-4 space-y-3"><ScoreBar label="SEO coverage" value={seo} /><ScoreBar label="Topic coverage" value={topic} /></div>
+        <div className="rounded-lg border border-border bg-muted/30 p-4 space-y-2">
+          <p className="text-[10px] uppercase tracking-wider text-muted-foreground">Quick wins</p>
+          <p className="text-sm">{asArr(o.missing_headings).length} missing headings · {asArr(o.missing_subtopics).length} subtopics · {faqs.length} FAQs</p>
+        </div>
+      </div>
+      <div className="grid gap-5 md:grid-cols-2">
+        <BulletBlock label="Missing headings" items={asArr(o.missing_headings)} />
+        <BulletBlock label="Missing subtopics" items={asArr(o.missing_subtopics)} />
+      </div>
+      <div className="grid gap-5 md:grid-cols-3">
+        <ListBlock label="Primary keywords" items={asArr(kw.primary)} />
+        <ListBlock label="Secondary keywords" items={asArr(kw.secondary)} />
+        <ListBlock label="Semantic keywords" items={asArr(kw.semantic)} />
+      </div>
+      <div className="space-y-2">
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Missing FAQs</p>
+        {faqs.map((f, i) => (
+          <div key={i} className="border-l-2 border-primary/40 pl-4">
+            <p className="font-semibold text-sm">{asStr(f.question)}</p>
+            <p className="text-xs text-muted-foreground mt-1">{asStr(f.answer)}</p>
+          </div>
+        ))}
+      </div>
+      <div className="grid gap-5 md:grid-cols-2">
+        <BulletBlock label="Thin sections" items={asArr(rec.thin_sections)} />
+        <BulletBlock label="Expand opportunities" items={asArr(rec.expand_opportunities)} />
+        <BulletBlock label="Better explanations" items={asArr(rec.better_explanations)} />
+        <BulletBlock label="Readability" items={asArr(rec.readability)} />
+      </div>
+    </div>
+  );
+}
+export const gapToMarkdown = (out: JsonValue) => {
+  const o = asObj(out);
+  const kw = asObj(o.missing_keywords);
+  const rec = asObj(o.recommendations);
+  const b = (k: string, arr: JsonValue[]) => [`## ${k}`, ...arr.map((x) => `- ${asStr(x)}`), ""].join("\n");
+  return [
+    `# Content Gap Analysis`,
+    `**Score:** ${asStr(o.content_score)}/100 · SEO ${asStr(o.seo_coverage)} · Topic ${asStr(o.topic_coverage)}`, ``,
+    b("Missing headings", asArr(o.missing_headings)),
+    b("Missing subtopics", asArr(o.missing_subtopics)),
+    b("Primary keywords", asArr(kw.primary)),
+    b("Secondary keywords", asArr(kw.secondary)),
+    b("Semantic keywords", asArr(kw.semantic)),
+    `## Missing FAQs`,
+    ...asArr(o.missing_faqs).map(asObj).map((f) => `### ${asStr(f.question)}\n${asStr(f.answer)}\n`),
+    b("Thin sections", asArr(rec.thin_sections)),
+    b("Expand opportunities", asArr(rec.expand_opportunities)),
+    b("Better explanations", asArr(rec.better_explanations)),
+    b("Readability", asArr(rec.readability)),
+  ].join("\n");
+};
+
+/* Content Brief */
+export function renderBrief(out: JsonValue) {
+  const o = asObj(out);
+  const structure = asObj(o.structure);
+  const sections = asArr(structure.sections).map(asObj);
+  const kw = asObj(o.keywords);
+  const guide = asObj(o.writing_guidelines);
+  const internal = asArr(o.internal_links).map(asObj);
+  const refs = asArr(o.external_references).map(asObj);
+  return (
+    <div className="space-y-6">
+      <div className="grid gap-3 sm:grid-cols-4">
+        <Stat label="Intent" value={asStr(o.search_intent) || "—"} />
+        <Stat label="Word count" value={asStr(o.word_count) || "—"} />
+        <Stat label="Primary KW" value={asStr(o.primary_keyword) || asStr(kw.primary) || "—"} />
+        <Stat label="Audience" value={asStr(o.target_audience).slice(0, 24) || "—"} />
+      </div>
+      <KV label="Content goal" value={asStr(o.content_goal)} />
+      <KV label="Target audience" value={asStr(o.target_audience)} />
+      <div className="space-y-2">
+        <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Suggested structure</p>
+        <div className="rounded-lg border border-border bg-muted/30 p-4 space-y-3">
+          <p className="font-display text-lg">H1 — {asStr(structure.h1)}</p>
+          <ul className="space-y-2">
+            {sections.map((s, i) => (
+              <li key={i}>
+                <p className="font-medium text-sm">H2 — {asStr(s.h2)}</p>
+                <ul className="ml-4 mt-1 space-y-0.5">
+                  {asArr(s.h3).map((h, j) => <li key={j} className="text-xs text-muted-foreground">H3 — {asStr(h)}</li>)}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div className="grid gap-5 md:grid-cols-2">
+        <BulletBlock label="Important questions" items={asArr(o.important_questions)} />
+        <BulletBlock label="Important topics" items={asArr(o.important_topics)} />
+      </div>
+      <div className="grid gap-5 md:grid-cols-3">
+        <ListBlock label="Secondary keywords" items={asArr(kw.secondary)} />
+        <ListBlock label="Long-tail" items={asArr(kw.long_tail)} />
+        <ListBlock label="Semantic" items={asArr(kw.semantic)} />
+      </div>
+      <div className="grid gap-5 md:grid-cols-2">
+        <div className="space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Internal link ideas</p>
+          {internal.map((r, i) => (
+            <div key={i} className="rounded-lg border border-border bg-muted/30 p-3">
+              <p className="font-medium text-sm">{asStr(r.title)}</p>
+              <p className="text-xs text-muted-foreground mt-1">{asStr(r.reason)}</p>
+            </div>
+          ))}
+        </div>
+        <div className="space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">External references</p>
+          {refs.map((r, i) => (
+            <div key={i} className="rounded-lg border border-border bg-muted/30 p-3">
+              <div className="flex justify-between gap-3 items-center">
+                <p className="font-medium text-sm">{asStr(r.title)}</p>
+                <a href={asStr(r.url)} target="_blank" rel="noreferrer" className="text-xs text-primary hover:underline truncate">{asStr(r.url)}</a>
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">{asStr(r.why)}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <BulletBlock label="Key takeaways" items={asArr(o.key_takeaways)} />
+      <div className="grid gap-3 sm:grid-cols-3">
+        <KV label="Tone" value={asStr(guide.tone)} />
+        <KV label="Reading level" value={asStr(guide.reading_level)} />
+        <KV label="Formatting" value={asStr(guide.formatting)} />
+      </div>
+    </div>
+  );
+}
+export const briefToMarkdown = (out: JsonValue) => {
+  const o = asObj(out);
+  const structure = asObj(o.structure);
+  const sections = asArr(structure.sections).map(asObj);
+  const kw = asObj(o.keywords);
+  const guide = asObj(o.writing_guidelines);
+  return [
+    `# Content Brief`,
+    `**Primary keyword:** ${asStr(o.primary_keyword) || asStr(kw.primary)}`,
+    `**Search intent:** ${asStr(o.search_intent)} · **Word count:** ${asStr(o.word_count)}`,
+    `**Audience:** ${asStr(o.target_audience)}`,
+    `**Goal:** ${asStr(o.content_goal)}`,
+    ``, `## Structure`, `H1: ${asStr(structure.h1)}`,
+    ...sections.flatMap((s) => [`- H2: ${asStr(s.h2)}`, ...asArr(s.h3).map((h) => `  - H3: ${asStr(h)}`)]),
+    ``, `## Important questions`, ...asArr(o.important_questions).map((x) => `- ${asStr(x)}`),
+    ``, `## Important topics`, ...asArr(o.important_topics).map((x) => `- ${asStr(x)}`),
+    ``, `## Keywords`,
+    `- Secondary: ${asArr(kw.secondary).map(asStr).join(", ")}`,
+    `- Long-tail: ${asArr(kw.long_tail).map(asStr).join(", ")}`,
+    `- Semantic: ${asArr(kw.semantic).map(asStr).join(", ")}`,
+    ``, `## Key takeaways`, ...asArr(o.key_takeaways).map((x) => `- ${asStr(x)}`),
+    ``, `## Writing guidelines`,
+    `- Tone: ${asStr(guide.tone)}`,
+    `- Reading level: ${asStr(guide.reading_level)}`,
+    `- Formatting: ${asStr(guide.formatting)}`,
+  ].join("\n");
+};
+
+
 /* ----- small helpers ----- */
 function Stat({ label, value }: { label: string; value: string }) {
   return (
