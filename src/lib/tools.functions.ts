@@ -15,8 +15,12 @@ export const TOOL_TYPES = [
   "schema_generator",
   "internal_links",
   "content_calendar",
+  "image_suggestions",
+  "content_gap",
+  "content_brief",
 ] as const;
 export type ToolType = (typeof TOOL_TYPES)[number];
+
 
 const RunSchema = z.object({
   tool_type: z.enum(TOOL_TYPES),
@@ -148,8 +152,79 @@ Schema:
   "monthly": [ { "week": string, "theme": string, "posts": [ { "title": string, "type": string } ] } ], // 4 weeks
   "publishing_schedule": [ { "day": string, "time": string, "channel": string } ]   // 4-6 recurring slots
 }`;
+    case "image_suggestions":
+      return `You are a visual content director for a blog post. Suggest images for the article's sections plus a featured image and a social thumbnail. Always include descriptive SEO alt text.
+${ctx}
+
+Schema:
+{
+  "featured_image": { "title": string, "description": string, "type": "Illustration"|"Infographic"|"Screenshot"|"Diagram"|"Photo"|"Comparison chart", "alt_text": string },
+  "social_thumbnail": { "title": string, "description": string, "type": "Illustration"|"Infographic"|"Screenshot"|"Diagram"|"Photo"|"Comparison chart", "alt_text": string },
+  "sections": [
+    {
+      "section_name": string,                  // H2 section title
+      "image_title": string,
+      "image_description": string,
+      "image_type": "Illustration"|"Infographic"|"Screenshot"|"Diagram"|"Photo"|"Comparison chart",
+      "alt_text": string
+    }
+  ]                                            // 5-8 sections
+}`;
+    case "content_gap":
+      return `Act as an SEO content auditor. Analyse the provided article and identify gaps vs. top-ranking content for the topic. Score the article fairly (0-100).
+${ctx}
+
+Schema:
+{
+  "content_score": number,                    // 0-100 overall
+  "seo_coverage": number,                     // 0-100
+  "topic_coverage": number,                   // 0-100
+  "missing_headings": string[],               // 5-10
+  "missing_subtopics": string[],              // 5-10
+  "missing_faqs": [ { "question": string, "answer": string } ],   // 4-8
+  "missing_keywords": {
+    "primary": string[],
+    "secondary": string[],
+    "semantic": string[]
+  },
+  "recommendations": {
+    "thin_sections": string[],
+    "expand_opportunities": string[],
+    "better_explanations": string[],
+    "readability": string[]
+  }
+}`;
+    case "content_brief":
+      return `Create a complete pre-writing content brief, similar to Surfer SEO / Frase briefs.
+${ctx}
+
+Schema:
+{
+  "search_intent": "informational" | "commercial" | "transactional" | "navigational",
+  "target_audience": string,
+  "content_goal": string,
+  "word_count": number,
+  "primary_keyword": string,
+  "structure": {
+    "h1": string,
+    "sections": [ { "h2": string, "h3": string[] } ]   // 5-8 H2s with 2-4 H3s each
+  },
+  "important_questions": string[],            // 6-10
+  "important_topics": string[],               // 6-10
+  "keywords": {
+    "primary": string,
+    "secondary": string[],
+    "long_tail": string[],
+    "semantic": string[]
+  },
+  "internal_links": [ { "title": string, "reason": string } ],
+  "external_references": [ { "title": string, "url": string, "why": string } ],
+  "key_takeaways": string[],
+  "writing_guidelines": { "tone": string, "reading_level": string, "formatting": string }
+}`;
   }
 }
+
 
 export const runTool = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
