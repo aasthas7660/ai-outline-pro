@@ -43,6 +43,60 @@ export type Database = {
           },
         ]
       }
+      generated_images: {
+        Row: {
+          alt_text: string | null
+          aspect_ratio: string
+          created_at: string
+          filename: string | null
+          id: string
+          image_prompt: string
+          image_style: string
+          image_url: string
+          kind: string
+          saved: boolean
+          section_name: string | null
+          storage_path: string | null
+          topic: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          alt_text?: string | null
+          aspect_ratio: string
+          created_at?: string
+          filename?: string | null
+          id?: string
+          image_prompt: string
+          image_style: string
+          image_url: string
+          kind?: string
+          saved?: boolean
+          section_name?: string | null
+          storage_path?: string | null
+          topic: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          alt_text?: string | null
+          aspect_ratio?: string
+          created_at?: string
+          filename?: string | null
+          id?: string
+          image_prompt?: string
+          image_style?: string
+          image_url?: string
+          kind?: string
+          saved?: boolean
+          section_name?: string | null
+          storage_path?: string | null
+          topic?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       outlines: {
         Row: {
           audience: string
