@@ -25,6 +25,9 @@ export function ToolRunner({
   showAudience = false,
   topicLabel = "Topic",
   topicPlaceholder = "e.g. Best CRMs for small sales teams",
+  extraLabel,
+  extraPlaceholder,
+  extraRows = 4,
   renderResult,
   toMarkdown,
 }: {
@@ -36,6 +39,9 @@ export function ToolRunner({
   showAudience?: boolean;
   topicLabel?: string;
   topicPlaceholder?: string;
+  extraLabel?: string;
+  extraPlaceholder?: string;
+  extraRows?: number;
   renderResult: (out: JsonValue) => React.ReactNode;
   toMarkdown: (out: JsonValue) => string;
 }) {
@@ -43,6 +49,7 @@ export function ToolRunner({
   const [topic, setTopic] = useState("");
   const [tone, setTone] = useState("Professional");
   const [audience, setAudience] = useState("General");
+  const [extra, setExtra] = useState("");
   const [result, setResult] = useState<{ id: string; output: JsonValue } | null>(null);
 
   const mut = useMutation({
@@ -54,6 +61,7 @@ export function ToolRunner({
           tone: showTone ? tone : undefined,
           audience: showAudience ? audience : undefined,
           language: "English",
+          extra: extra.trim() ? extra.trim().slice(0, 2000) : undefined,
         },
       }),
     onSuccess: (d) => {
@@ -68,6 +76,7 @@ export function ToolRunner({
     if (topic.trim().length < 2) return toast.error("Please enter a topic");
     mut.mutate();
   };
+
 
   const onCopy = async () => {
     if (!result) return;
