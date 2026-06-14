@@ -156,8 +156,8 @@ function ImageGeneratorPage() {
   }, [hasMore, galleryLoading]);
 
   /* -------- generate flow -------- */
-  const onGenerate = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onGenerate = async (e?: React.FormEvent) => {
+    e?.preventDefault();
     if (topic.trim().length < 3) return toast.error("Please enter a blog topic");
     if (!incFeatured && !incSections && !incSocial && !incPin) {
       return toast.error("Choose at least one image to generate");
@@ -385,7 +385,7 @@ function ImageGeneratorPage() {
                 Generate
               </Button>
               {items.length > 0 && !busy && (
-                <Button type="button" variant="outline" onClick={() => { const f = document.createElement("form"); void onGenerate({ preventDefault: () => {}, currentTarget: f, target: f } as unknown as React.FormEvent); }}>
+                <Button type="button" variant="outline" onClick={() => void onGenerate()}>
                   <RefreshCw className="mr-2 h-4 w-4" /> Regenerate all
                 </Button>
               )}
