@@ -15,8 +15,12 @@ export const TOOL_TYPES = [
   "schema_generator",
   "internal_links",
   "content_calendar",
+  "image_suggestions",
+  "content_gap",
+  "content_brief",
 ] as const;
 export type ToolType = (typeof TOOL_TYPES)[number];
+
 
 const RunSchema = z.object({
   tool_type: z.enum(TOOL_TYPES),
