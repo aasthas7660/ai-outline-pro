@@ -108,6 +108,13 @@ export function ToolRunner({
             <Label>{topicLabel}</Label>
             <Textarea rows={2} placeholder={topicPlaceholder} value={topic} onChange={(e) => setTopic(e.target.value)} maxLength={500} />
           </div>
+          {extraLabel && (
+            <div className="space-y-2">
+              <Label>{extraLabel}</Label>
+              <Textarea rows={extraRows} placeholder={extraPlaceholder} value={extra} onChange={(e) => setExtra(e.target.value)} maxLength={2000} />
+            </div>
+          )}
+
           {(showTone || showAudience) && (
             <div className="grid grid-cols-2 gap-3">
               {showTone && (
