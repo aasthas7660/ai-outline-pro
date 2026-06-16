@@ -28,7 +28,7 @@ const items = [
   { key: "nav.seo", url: "/seo-tools", icon: Search },
   { key: "nav.content", url: "/content-tools", icon: Wand2 },
   { key: "nav.images", url: "/image-suggestions", icon: ImageIcon },
-  { key: "nav.imagegen", url: "/image-generator", icon: ImagePlus },
+  
   { key: "nav.gap", url: "/content-gap", icon: GitCompareArrows },
   { key: "nav.competitor", url: "/competitor-analysis", icon: Users },
   { key: "nav.schema", url: "/schema-generator", icon: Code2 },
