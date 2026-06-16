@@ -2,7 +2,7 @@ import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import {
   LayoutDashboard, Sparkles, History, Star, Settings, LogOut, Search, Wand2,
   Users, Code2, CalendarDays, Link as LinkIcon, Download,
-  Image as ImageIcon, GitCompareArrows, ClipboardList, ImagePlus,
+  Image as ImageIcon, GitCompareArrows, ClipboardList,
 } from "lucide-react";
 import {
   Sidebar,

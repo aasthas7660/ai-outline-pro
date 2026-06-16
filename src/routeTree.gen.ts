@@ -19,7 +19,6 @@ import { Route as AuthenticatedSchemaGeneratorRouteImport } from './routes/_auth
 import { Route as AuthenticatedNewRouteImport } from './routes/_authenticated/new'
 import { Route as AuthenticatedInternalLinksRouteImport } from './routes/_authenticated/internal-links'
 import { Route as AuthenticatedImageSuggestionsRouteImport } from './routes/_authenticated/image-suggestions'
-import { Route as AuthenticatedImageGeneratorRouteImport } from './routes/_authenticated/image-generator'
 import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
 import { Route as AuthenticatedFavoritesRouteImport } from './routes/_authenticated/favorites'
 import { Route as AuthenticatedExportCenterRouteImport } from './routes/_authenticated/export-center'
@@ -80,12 +79,6 @@ const AuthenticatedImageSuggestionsRoute =
   AuthenticatedImageSuggestionsRouteImport.update({
     id: '/image-suggestions',
     path: '/image-suggestions',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedImageGeneratorRoute =
-  AuthenticatedImageGeneratorRouteImport.update({
-    id: '/image-generator',
-    path: '/image-generator',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedHistoryRoute = AuthenticatedHistoryRouteImport.update({
@@ -152,7 +145,6 @@ export interface FileRoutesByFullPath {
   '/export-center': typeof AuthenticatedExportCenterRoute
   '/favorites': typeof AuthenticatedFavoritesRoute
   '/history': typeof AuthenticatedHistoryRoute
-  '/image-generator': typeof AuthenticatedImageGeneratorRoute
   '/image-suggestions': typeof AuthenticatedImageSuggestionsRoute
   '/internal-links': typeof AuthenticatedInternalLinksRoute
   '/new': typeof AuthenticatedNewRoute
@@ -173,7 +165,6 @@ export interface FileRoutesByTo {
   '/export-center': typeof AuthenticatedExportCenterRoute
   '/favorites': typeof AuthenticatedFavoritesRoute
   '/history': typeof AuthenticatedHistoryRoute
-  '/image-generator': typeof AuthenticatedImageGeneratorRoute
   '/image-suggestions': typeof AuthenticatedImageSuggestionsRoute
   '/internal-links': typeof AuthenticatedInternalLinksRoute
   '/new': typeof AuthenticatedNewRoute
@@ -196,7 +187,6 @@ export interface FileRoutesById {
   '/_authenticated/export-center': typeof AuthenticatedExportCenterRoute
   '/_authenticated/favorites': typeof AuthenticatedFavoritesRoute
   '/_authenticated/history': typeof AuthenticatedHistoryRoute
-  '/_authenticated/image-generator': typeof AuthenticatedImageGeneratorRoute
   '/_authenticated/image-suggestions': typeof AuthenticatedImageSuggestionsRoute
   '/_authenticated/internal-links': typeof AuthenticatedInternalLinksRoute
   '/_authenticated/new': typeof AuthenticatedNewRoute
@@ -219,7 +209,6 @@ export interface FileRouteTypes {
     | '/export-center'
     | '/favorites'
     | '/history'
-    | '/image-generator'
     | '/image-suggestions'
     | '/internal-links'
     | '/new'
@@ -240,7 +229,6 @@ export interface FileRouteTypes {
     | '/export-center'
     | '/favorites'
     | '/history'
-    | '/image-generator'
     | '/image-suggestions'
     | '/internal-links'
     | '/new'
@@ -262,7 +250,6 @@ export interface FileRouteTypes {
     | '/_authenticated/export-center'
     | '/_authenticated/favorites'
     | '/_authenticated/history'
-    | '/_authenticated/image-generator'
     | '/_authenticated/image-suggestions'
     | '/_authenticated/internal-links'
     | '/_authenticated/new'
@@ -350,13 +337,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedImageSuggestionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/image-generator': {
-      id: '/_authenticated/image-generator'
-      path: '/image-generator'
-      fullPath: '/image-generator'
-      preLoaderRoute: typeof AuthenticatedImageGeneratorRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/history': {
       id: '/_authenticated/history'
       path: '/history'
@@ -433,7 +413,6 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedExportCenterRoute: typeof AuthenticatedExportCenterRoute
   AuthenticatedFavoritesRoute: typeof AuthenticatedFavoritesRoute
   AuthenticatedHistoryRoute: typeof AuthenticatedHistoryRoute
-  AuthenticatedImageGeneratorRoute: typeof AuthenticatedImageGeneratorRoute
   AuthenticatedImageSuggestionsRoute: typeof AuthenticatedImageSuggestionsRoute
   AuthenticatedInternalLinksRoute: typeof AuthenticatedInternalLinksRoute
   AuthenticatedNewRoute: typeof AuthenticatedNewRoute
@@ -452,7 +431,6 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedExportCenterRoute: AuthenticatedExportCenterRoute,
   AuthenticatedFavoritesRoute: AuthenticatedFavoritesRoute,
   AuthenticatedHistoryRoute: AuthenticatedHistoryRoute,
-  AuthenticatedImageGeneratorRoute: AuthenticatedImageGeneratorRoute,
   AuthenticatedImageSuggestionsRoute: AuthenticatedImageSuggestionsRoute,
   AuthenticatedInternalLinksRoute: AuthenticatedInternalLinksRoute,
   AuthenticatedNewRoute: AuthenticatedNewRoute,
@@ -473,13 +451,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
