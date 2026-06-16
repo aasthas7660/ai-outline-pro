@@ -2,7 +2,7 @@ import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import {
   LayoutDashboard, Sparkles, History, Star, Settings, LogOut, Search, Wand2,
   Users, Code2, CalendarDays, Link as LinkIcon, Download,
-  Image as ImageIcon, GitCompareArrows, ClipboardList, ImagePlus,
+  Image as ImageIcon, GitCompareArrows, ClipboardList,
 } from "lucide-react";
 import {
   Sidebar,
@@ -28,7 +28,7 @@ const items = [
   { key: "nav.seo", url: "/seo-tools", icon: Search },
   { key: "nav.content", url: "/content-tools", icon: Wand2 },
   { key: "nav.images", url: "/image-suggestions", icon: ImageIcon },
-  { key: "nav.imagegen", url: "/image-generator", icon: ImagePlus },
+  
   { key: "nav.gap", url: "/content-gap", icon: GitCompareArrows },
   { key: "nav.competitor", url: "/competitor-analysis", icon: Users },
   { key: "nav.schema", url: "/schema-generator", icon: Code2 },
