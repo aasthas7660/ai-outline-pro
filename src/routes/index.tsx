@@ -1,174 +1,216 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Sparkles, Wand2, Languages, Target, ListChecks, FileText, ArrowRight, Zap, Globe2, ShieldCheck } from "lucide-react";
+import { Menu, ArrowRight } from "lucide-react";
+import heroIllustration from "@/assets/blogger-hero.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "OutlineCraft AI — Generate Blog Outlines with AI" },
-      { name: "description", content: "Generate well-structured blog outlines with AI. H1, H2, H3, intros, FAQs, and key takeaways in any tone, language, and length." },
+      { title: "OutlineCraft AI — Publishing platform for professional bloggers" },
+      { name: "description", content: "Create beautiful, independent online publications. Generate blog outlines, SEO tools, briefs and more — faster than ever." },
       { property: "og:title", content: "OutlineCraft AI" },
-      { property: "og:description", content: "AI-powered blog outline generator built for serious content creators." },
+      { property: "og:description", content: "Publishing platform for professional bloggers." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Landing,
 });
 
 const features = [
-  { icon: Wand2, title: "Structured outputs", desc: "H1, H2, H3, intro, conclusion, takeaways, related topics, and 5 FAQs — every time." },
-  { icon: Languages, title: "Multilingual", desc: "Generate in English, Spanish, French, German, Portuguese, Japanese and more." },
-  { icon: Target, title: "Audience-tuned", desc: "Pick tone, audience, and length so every outline matches your brand voice." },
-  { icon: ListChecks, title: "Save & favorite", desc: "Keep a searchable history. Star the ones worth turning into full posts." },
-  { icon: Zap, title: "Lightning fast", desc: "Get a complete outline in seconds. Regenerate with one click." },
-  { icon: ShieldCheck, title: "Private by default", desc: "Your outlines are yours. Row-level security on every row." },
-];
-
-const steps = [
-  { n: "01", title: "Describe your topic", desc: "Add the blog topic, target audience, tone, language, and length." },
-  { n: "02", title: "Generate with AI", desc: "Our AI drafts a complete, SEO-ready outline in seconds." },
-  { n: "03", title: "Save, copy, or refine", desc: "Copy the outline, save it, or regenerate until it's perfect." },
+  { title: "Structured outlines", desc: "H1, H2, H3, intro, conclusion, takeaways and 5 FAQs — every single time." },
+  { title: "SEO built-in", desc: "Keywords, intent, meta tags, slugs and SEO score baked into every draft." },
+  { title: "Multilingual", desc: "Ship in English, Hindi, Marathi, Spanish, French, German and more." },
+  { title: "Briefs & gaps", desc: "Surfer-style content briefs and gap audits against top-ranking pages." },
+  { title: "Content calendar", desc: "Plan weeks of publishing in one click and export in any format." },
+  { title: "Private by default", desc: "Row-level security on every row. Your outlines are yours." },
 ];
 
 const faqs = [
   { q: "What kinds of outlines can I generate?", a: "Any long-form blog post: how-tos, listicles, opinion pieces, deep-dives, comparison posts, and more." },
-  { q: "Which languages are supported?", a: "English, Spanish, French, German, Portuguese, Italian, Dutch, Hindi, and Japanese out of the box." },
-  { q: "Can I edit and reuse outlines?", a: "Yes — every outline is saved to your history. Favorite the best ones and copy them as Markdown." },
+  { q: "Which languages are supported?", a: "English, Hindi, Marathi, Spanish, French, German, Portuguese, Italian, Dutch and Japanese." },
+  { q: "Can I edit and reuse outlines?", a: "Yes — every outline is saved to your history. Favorite the best ones and export as Markdown, HTML, TXT or Blogger." },
   { q: "Is my data private?", a: "Yes. Each user only ever sees their own outlines — enforced at the database layer." },
-  { q: "Is there a free tier?", a: "Yes, free generations are included while you explore. Upgrade for unlimited use." },
+  { q: "Is there a free tier?", a: "Yes, free generations are included while you explore." },
 ];
 
 function Landing() {
   return (
-    <div className="min-h-screen">
-      {/* Nav */}
-      <header className="sticky top-0 z-40 backdrop-blur-md bg-background/70 border-b border-border">
-        <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="grid h-8 w-8 place-items-center rounded-md bg-primary text-primary-foreground">
-              <Sparkles className="h-4 w-4" />
-            </div>
-            <span className="font-display text-lg font-semibold">OutlineCraft AI</span>
-          </Link>
-          <nav className="hidden md:flex items-center gap-8 text-sm text-muted-foreground">
-            <a href="#features" className="hover:text-foreground">Features</a>
-            <a href="#how" className="hover:text-foreground">How it works</a>
-            <a href="#faq" className="hover:text-foreground">FAQ</a>
-          </nav>
-          <div className="flex items-center gap-2">
-            <Button asChild variant="ghost"><Link to="/auth">Log in</Link></Button>
-            <Button asChild><Link to="/auth">Get started</Link></Button>
-          </div>
-        </div>
-      </header>
+    <div
+      className="min-h-screen"
+      style={{
+        // Scoped light palette — doesn't touch the dark app shell
+        ["--cream" as any]: "#f5efe6",
+        ["--cream-2" as any]: "#efe7db",
+        ["--ink" as any]: "#22201d",
+        ["--ink-2" as any]: "#4a4744",
+        ["--coral" as any]: "#e85d4a",
+        ["--coral-2" as any]: "#d94a37",
+        background: "#2b2825",
+        color: "var(--ink)",
+      }}
+    >
+      <div className="mx-auto max-w-[1280px] px-4 py-6 md:py-10">
+        {/* Rounded card containing the whole page */}
+        <div
+          className="rounded-[36px] overflow-hidden"
+          style={{ background: "var(--cream)" }}
+        >
+          {/* NAV */}
+          <header className="flex items-center justify-between px-6 md:px-14 pt-8 md:pt-10">
+            <Link to="/" className="flex items-center gap-2 font-semibold text-[color:var(--ink)]">
+              <Menu className="h-5 w-5" strokeWidth={2.5} />
+              <span className="font-display text-xl tracking-tight">OutlineCraft</span>
+            </Link>
+            <nav className="hidden md:flex items-center gap-10 text-[15px] text-[color:var(--ink-2)]">
+              <a href="#about" className="hover:text-[color:var(--ink)]">About</a>
+              <a href="#features" className="hover:text-[color:var(--ink)]">Features</a>
+              <a href="#faq" className="hover:text-[color:var(--ink)]">Resources</a>
+            </nav>
+            <Link
+              to="/auth"
+              className="rounded-full border-2 border-[color:var(--ink)] px-5 py-2 text-sm font-medium text-[color:var(--ink)] hover:bg-[color:var(--ink)] hover:text-[color:var(--cream)] transition-colors"
+            >
+              Try for Free
+            </Link>
+          </header>
 
-      {/* Hero */}
-      <section className="relative overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
-        <div className="mx-auto max-w-7xl px-6 pt-24 pb-32 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-card/60 px-3 py-1 text-xs text-muted-foreground">
-            <Sparkles className="h-3 w-3 text-primary" /> Powered by Lovable AI
-          </div>
-          <h1 className="mt-6 font-display text-5xl md:text-7xl font-semibold leading-[1.05] tracking-tight">
-            Beautiful blog outlines, <br />
-            <span className="gradient-text">generated in seconds.</span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground">
-            Stop staring at the blank page. Describe your topic — we deliver a complete H1/H2/H3 structure with intro, FAQs, takeaways, and related ideas.
-          </p>
-          <div className="mt-10 flex items-center justify-center gap-3">
-            <Button asChild size="lg" className="shadow-[var(--shadow-elegant)]">
-              <Link to="/auth">Start generating <ArrowRight className="ml-2 h-4 w-4" /></Link>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <a href="#how">See how it works</a>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section id="features" className="mx-auto max-w-7xl px-6 py-24">
-        <div className="text-center">
-          <h2 className="font-display text-4xl font-semibold">Everything you need to ship better content</h2>
-          <p className="mt-3 text-muted-foreground">Designed for content marketers, technical writers, and indie bloggers.</p>
-        </div>
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {features.map((f) => (
-            <Card key={f.title} className="surface-card transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-elegant)]">
-              <CardContent className="p-6">
-                <div className="grid h-10 w-10 place-items-center rounded-md bg-primary/15 text-primary">
-                  <f.icon className="h-5 w-5" />
-                </div>
-                <h3 className="mt-4 font-display text-lg font-semibold">{f.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{f.desc}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section id="how" className="border-y border-border bg-card/30">
-        <div className="mx-auto max-w-7xl px-6 py-24">
-          <div className="text-center">
-            <h2 className="font-display text-4xl font-semibold">From idea to outline in three steps</h2>
-          </div>
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {steps.map((s) => (
-              <div key={s.n} className="surface-card rounded-xl p-6">
-                <p className="font-display text-3xl gradient-text">{s.n}</p>
-                <h3 className="mt-3 font-display text-lg font-semibold">{s.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{s.desc}</p>
+          {/* HERO */}
+          <section className="grid gap-8 md:grid-cols-2 items-center px-6 md:px-14 pt-14 md:pt-20 pb-16 md:pb-24">
+            <div>
+              <h1 className="font-display font-bold text-[color:var(--ink)] leading-[1.02] tracking-tight text-5xl md:text-6xl lg:text-7xl">
+                Publishing<br />platform for<br />professional<br />bloggers
+              </h1>
+              <p className="mt-8 max-w-md text-[17px] leading-relaxed text-[color:var(--ink-2)]">
+                Create beautiful, independent online publications by writing faster and better than you ever have before.
+              </p>
+              <div className="mt-10">
+                <Link
+                  to="/auth"
+                  className="inline-flex items-center gap-3 rounded-md px-6 py-3.5 text-[15px] font-semibold text-white shadow-[0_10px_24px_-10px_rgba(232,93,74,0.7)] hover:brightness-105 transition"
+                  style={{ background: "var(--coral)" }}
+                >
+                  Get Started
+                  <span className="text-white/80">—</span>
+                  <span className="text-white/90 font-normal">it's free</span>
+                </Link>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
+            <div className="relative">
+              <img
+                src={heroIllustration}
+                alt="Illustration of a blogger writing on a laptop surrounded by creative ideas"
+                width={1200}
+                height={1024}
+                className="w-full h-auto"
+              />
+            </div>
+          </section>
 
-      {/* FAQ */}
-      <section id="faq" className="mx-auto max-w-3xl px-6 py-24">
-        <div className="text-center">
-          <h2 className="font-display text-4xl font-semibold">Frequently asked questions</h2>
-        </div>
-        <Accordion type="single" collapsible className="mt-10">
-          {faqs.map((f, i) => (
-            <AccordionItem key={i} value={`f-${i}`}>
-              <AccordionTrigger className="text-left">{f.q}</AccordionTrigger>
-              <AccordionContent className="text-muted-foreground">{f.a}</AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </section>
+          {/* FEATURES */}
+          <section id="features" className="px-6 md:px-14 py-16 md:py-24 border-t" style={{ borderColor: "rgba(34,32,29,0.08)" }}>
+            <div className="max-w-2xl">
+              <p className="text-sm uppercase tracking-[0.2em] text-[color:var(--ink-2)]">Features</p>
+              <h2 className="mt-4 font-display font-bold text-4xl md:text-5xl text-[color:var(--ink)] leading-tight">
+                Everything you need to publish with confidence
+              </h2>
+            </div>
+            <div className="mt-14 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {features.map((f, i) => (
+                <div key={f.title} className="border-t pt-6" style={{ borderColor: "rgba(34,32,29,0.15)" }}>
+                  <div className="text-sm text-[color:var(--ink-2)]">0{i + 1}</div>
+                  <h3 className="mt-3 font-display text-xl font-semibold text-[color:var(--ink)]">{f.title}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-[color:var(--ink-2)]">{f.desc}</p>
+                </div>
+              ))}
+            </div>
+          </section>
 
-      {/* CTA */}
-      <section className="mx-auto max-w-7xl px-6 pb-24">
-        <div className="surface-card rounded-2xl p-12 text-center" style={{ background: "var(--gradient-primary)" }}>
-          <h2 className="font-display text-4xl font-semibold text-primary-foreground">Ready to publish faster?</h2>
-          <p className="mx-auto mt-3 max-w-xl text-primary-foreground/80">Join writers shipping better blog posts in a fraction of the time.</p>
-          <div className="mt-8">
-            <Button asChild size="lg" variant="secondary">
-              <Link to="/auth">Create your first outline <ArrowRight className="ml-2 h-4 w-4" /></Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+          {/* ABOUT / HOW */}
+          <section id="about" className="px-6 md:px-14 py-16 md:py-24" style={{ background: "var(--cream-2)" }}>
+            <div className="grid md:grid-cols-2 gap-12 items-start">
+              <div>
+                <p className="text-sm uppercase tracking-[0.2em] text-[color:var(--ink-2)]">How it works</p>
+                <h2 className="mt-4 font-display font-bold text-4xl md:text-5xl text-[color:var(--ink)] leading-tight">
+                  From blank page to publish — in three moves.
+                </h2>
+              </div>
+              <div className="space-y-8">
+                {[
+                  { n: "01", t: "Describe your topic", d: "Add the blog topic, target audience, tone, language and length." },
+                  { n: "02", t: "Generate with AI", d: "We draft a complete, SEO-ready outline in seconds." },
+                  { n: "03", t: "Save, export, refine", d: "Copy the outline, save it, or regenerate until it's perfect." },
+                ].map((s) => (
+                  <div key={s.n} className="flex gap-6">
+                    <div className="font-display text-3xl text-[color:var(--coral)] font-bold w-14 shrink-0">{s.n}</div>
+                    <div>
+                      <h3 className="font-display text-xl font-semibold text-[color:var(--ink)]">{s.t}</h3>
+                      <p className="mt-1 text-[15px] text-[color:var(--ink-2)] leading-relaxed">{s.d}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
-      {/* Footer */}
-      <footer className="border-t border-border">
-        <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <Globe2 className="h-4 w-4" />
-            <span>© {new Date().getFullYear()} OutlineCraft AI</span>
-          </div>
-          <div className="flex items-center gap-6">
-            <a href="#features" className="hover:text-foreground">Features</a>
-            <a href="#how" className="hover:text-foreground">How it works</a>
-            <a href="#faq" className="hover:text-foreground">FAQ</a>
-            <Link to="/auth" className="hover:text-foreground">Sign in</Link>
-          </div>
+          {/* FAQ */}
+          <section id="faq" className="px-6 md:px-14 py-16 md:py-24">
+            <div className="max-w-2xl">
+              <p className="text-sm uppercase tracking-[0.2em] text-[color:var(--ink-2)]">FAQ</p>
+              <h2 className="mt-4 font-display font-bold text-4xl md:text-5xl text-[color:var(--ink)] leading-tight">
+                Frequently asked questions
+              </h2>
+            </div>
+            <Accordion type="single" collapsible className="mt-10 max-w-3xl">
+              {faqs.map((f, i) => (
+                <AccordionItem key={i} value={`f-${i}`} className="border-b" style={{ borderColor: "rgba(34,32,29,0.15)" }}>
+                  <AccordionTrigger className="text-left text-[color:var(--ink)] hover:no-underline text-lg font-display font-semibold py-5">
+                    {f.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-[color:var(--ink-2)] text-[15px] leading-relaxed pb-5">
+                    {f.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </section>
+
+          {/* CTA */}
+          <section className="px-6 md:px-14 pb-20">
+            <div
+              className="rounded-3xl p-10 md:p-16 flex flex-col md:flex-row items-start md:items-center justify-between gap-8"
+              style={{ background: "var(--ink)" }}
+            >
+              <div>
+                <h2 className="font-display font-bold text-3xl md:text-5xl text-[color:var(--cream)] leading-tight max-w-xl">
+                  Ready to publish faster?
+                </h2>
+                <p className="mt-4 text-[color:var(--cream)]/70 max-w-md">
+                  Join writers shipping better blog posts in a fraction of the time.
+                </p>
+              </div>
+              <Link
+                to="/auth"
+                className="inline-flex items-center gap-3 rounded-md px-6 py-3.5 text-[15px] font-semibold text-white transition hover:brightness-105"
+                style={{ background: "var(--coral)" }}
+              >
+                Get Started <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </section>
+
+          {/* FOOTER */}
+          <footer className="px-6 md:px-14 pb-12 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[color:var(--ink-2)]">
+            <div>© {new Date().getFullYear()} OutlineCraft AI</div>
+            <div className="flex items-center gap-6">
+              <a href="#features" className="hover:text-[color:var(--ink)]">Features</a>
+              <a href="#about" className="hover:text-[color:var(--ink)]">About</a>
+              <a href="#faq" className="hover:text-[color:var(--ink)]">FAQ</a>
+              <Link to="/auth" className="hover:text-[color:var(--ink)]">Sign in</Link>
+            </div>
+          </footer>
         </div>
-      </footer>
+      </div>
     </div>
   );
 }
