@@ -12,7 +12,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Sparkles, Copy, Star, RefreshCw, Loader2 } from "lucide-react";
+import { Copy, Star, RefreshCw } from "lucide-react";
+import { LottieIcon } from "@/components/LottieIcon";
+
 import { toast } from "sonner";
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [k: string]: JsonValue };
