@@ -12,7 +12,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Sparkles, Copy, Star, RefreshCw, Loader2 } from "lucide-react";
+import { Sparkles, Copy, Star, RefreshCw } from "lucide-react";
+import { LottieIcon } from "@/components/LottieIcon";
+
+
 import { toast } from "sonner";
 
 type JsonValue = string | number | boolean | null | JsonValue[] | { [k: string]: JsonValue };
@@ -98,10 +101,14 @@ export function ToolRunner({
     <Card className="surface-card">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Icon className="h-5 w-5 text-primary" />
+          <span className="relative grid h-8 w-8 place-items-center">
+            <LottieIcon name="pulse" className="absolute inset-0 h-8 w-8" />
+            <Icon className="relative h-4 w-4 text-primary" />
+          </span>
           {title}
         </CardTitle>
         <p className="text-sm text-muted-foreground">{description}</p>
+
       </CardHeader>
       <CardContent className="space-y-4">
         <form onSubmit={onSubmit} className="space-y-3">
@@ -134,7 +141,7 @@ export function ToolRunner({
           )}
           <div className="flex gap-2">
             <Button type="submit" disabled={mut.isPending}>
-              {mut.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+              {mut.isPending ? <LottieIcon name="ring" className="mr-2 h-4 w-4" /> : <Sparkles className="mr-2 h-4 w-4" />}
               Generate
             </Button>
             {result && (
@@ -150,12 +157,17 @@ export function ToolRunner({
         </form>
 
         {mut.isPending && (
-          <div className="space-y-2 pt-2">
+          <div className="space-y-3 pt-2">
+            <div className="flex items-center gap-3 rounded-xl bg-muted/60 px-4 py-3">
+              <LottieIcon name="dots" className="h-8 w-8" />
+              <span className="text-sm text-muted-foreground">Crafting your result…</span>
+            </div>
             <Skeleton className="h-6 w-3/4" />
             <Skeleton className="h-20 w-full" />
             <Skeleton className="h-20 w-full" />
           </div>
         )}
+
         {!mut.isPending && result && (
           <div className="pt-3 border-t border-border/60">{renderResult(result.output)}</div>
         )}

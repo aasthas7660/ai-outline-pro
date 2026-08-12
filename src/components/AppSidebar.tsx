@@ -20,6 +20,8 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useT } from "@/lib/preferences";
+import { LottieIcon } from "@/components/LottieIcon";
+
 
 const items = [
   { key: "nav.dashboard", url: "/dashboard", icon: LayoutDashboard },
@@ -56,11 +58,12 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b border-sidebar-border">
         <Link to="/dashboard" className="flex items-center gap-2 px-2 py-3">
-          <div className="grid h-8 w-8 place-items-center rounded-md bg-primary text-primary-foreground">
-            <Sparkles className="h-4 w-4" />
+          <div className="grid h-8 w-8 place-items-center rounded-md bg-secondary">
+            <LottieIcon name="sparkle" className="h-6 w-6" />
           </div>
           <span className="font-display text-lg font-semibold">OutlineCraft</span>
         </Link>
+
       </SidebarHeader>
 
       <SidebarContent>
