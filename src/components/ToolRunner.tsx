@@ -137,7 +137,7 @@ export function ToolRunner({
           )}
           <div className="flex gap-2">
             <Button type="submit" disabled={mut.isPending}>
-              {mut.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Sparkles className="mr-2 h-4 w-4" />}
+              {mut.isPending ? <LottieIcon name="ring" className="mr-2 h-4 w-4" /> : <Sparkles className="mr-2 h-4 w-4" />}
               Generate
             </Button>
             {result && (
