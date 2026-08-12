@@ -153,12 +153,17 @@ export function ToolRunner({
         </form>
 
         {mut.isPending && (
-          <div className="space-y-2 pt-2">
+          <div className="space-y-3 pt-2">
+            <div className="flex items-center gap-3 rounded-xl bg-muted/60 px-4 py-3">
+              <LottieIcon name="dots" className="h-8 w-8" />
+              <span className="text-sm text-muted-foreground">Crafting your result…</span>
+            </div>
             <Skeleton className="h-6 w-3/4" />
             <Skeleton className="h-20 w-full" />
             <Skeleton className="h-20 w-full" />
           </div>
         )}
+
         {!mut.isPending && result && (
           <div className="pt-3 border-t border-border/60">{renderResult(result.output)}</div>
         )}
