@@ -29,18 +29,18 @@ function applyTheme(t: Theme) {
 }
 
 export function PreferencesProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>("dark");
+  const [theme, setThemeState] = useState<Theme>("light");
   const [language, setLanguageState] = useState<AppLanguage>("en");
 
   useEffect(() => {
     try {
-      const t = (localStorage.getItem(THEME_KEY) as Theme | null) ?? "dark";
+      const t = (localStorage.getItem(THEME_KEY) as Theme | null) ?? "light";
       const l = (localStorage.getItem(LANG_KEY) as AppLanguage | null) ?? "en";
       setThemeState(t);
       setLanguageState(l);
       applyTheme(t);
     } catch {
-      applyTheme("dark");
+      applyTheme("light");
     }
   }, []);
 
