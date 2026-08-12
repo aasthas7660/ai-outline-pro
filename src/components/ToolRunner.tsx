@@ -101,10 +101,14 @@ export function ToolRunner({
     <Card className="surface-card">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <Icon className="h-5 w-5 text-primary" />
+          <span className="relative grid h-8 w-8 place-items-center">
+            <LottieIcon name="pulse" className="absolute inset-0 h-8 w-8" />
+            <Icon className="relative h-4 w-4 text-primary" />
+          </span>
           {title}
         </CardTitle>
         <p className="text-sm text-muted-foreground">{description}</p>
+
       </CardHeader>
       <CardContent className="space-y-4">
         <form onSubmit={onSubmit} className="space-y-3">
