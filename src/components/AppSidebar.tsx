@@ -20,6 +20,8 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useT } from "@/lib/preferences";
+import { LottieIcon } from "@/components/LottieIcon";
+
 
 const items = [
   { key: "nav.dashboard", url: "/dashboard", icon: LayoutDashboard },
