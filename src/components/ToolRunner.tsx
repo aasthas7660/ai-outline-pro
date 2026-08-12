@@ -12,8 +12,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Copy, Star, RefreshCw } from "lucide-react";
+import { Sparkles, Copy, Star, RefreshCw } from "lucide-react";
 import { LottieIcon } from "@/components/LottieIcon";
+
 
 import { toast } from "sonner";
 
