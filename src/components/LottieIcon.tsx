@@ -5,7 +5,7 @@ import dots from "@/assets/lottie/dots.json";
 import ring from "@/assets/lottie/ring.json";
 import pulse from "@/assets/lottie/pulse.json";
 
-const Lottie = lazy(async () => {
+const Lottie = lazy(async (): Promise<{ default: React.ComponentType<any> }> => {
   const mod: any = await import("lottie-react");
   const Comp = mod.default?.default ?? mod.default ?? mod;
   return { default: Comp };
