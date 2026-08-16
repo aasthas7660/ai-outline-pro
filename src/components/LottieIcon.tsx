@@ -1,3 +1,4 @@
+import type React from "react";
 import { lazy, Suspense } from "react";
 import { cn } from "@/lib/utils";
 import sparkle from "@/assets/lottie/sparkle.json";
@@ -5,7 +6,11 @@ import dots from "@/assets/lottie/dots.json";
 import ring from "@/assets/lottie/ring.json";
 import pulse from "@/assets/lottie/pulse.json";
 
-const Lottie = lazy(() => import("lottie-react"));
+const Lottie = lazy(async (): Promise<{ default: React.ComponentType<any> }> => {
+  const mod: any = await import("lottie-react");
+  const Comp = mod.default?.default ?? mod.default ?? mod;
+  return { default: Comp };
+});
 
 export const lottieAnimations = { sparkle, dots, ring, pulse } as const;
 export type LottieName = keyof typeof lottieAnimations;
