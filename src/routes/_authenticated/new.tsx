@@ -56,7 +56,8 @@ function NewOutline() {
 
   const onFavorite = async () => {
     if (!outline) return;
-    const { data: u } = await supabase.auth.getUser();
+    const { data: s_ } = await supabase.auth.getSession();
+    const u = { user: s_.session?.user ?? null };
     if (!u.user) return;
     const { error } = await supabase.from("favorites").insert({ user_id: u.user.id, outline_id: outline.id });
     if (error) {

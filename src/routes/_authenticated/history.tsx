@@ -74,7 +74,8 @@ function HistoryPage() {
   };
 
   const onFavorite = async (id: string) => {
-    const { data: u } = await supabase.auth.getUser();
+    const { data: s_ } = await supabase.auth.getSession();
+    const u = { user: s_.session?.user ?? null };
     if (!u.user) return;
     const { error } = await supabase.from("favorites").insert({ user_id: u.user.id, outline_id: id });
     if (error?.code === "23505") return toast.info("Already in favorites");

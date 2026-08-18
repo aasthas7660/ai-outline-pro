@@ -25,7 +25,8 @@ function SettingsPage() {
 
   useEffect(() => {
     (async () => {
-      const { data: u } = await supabase.auth.getUser();
+      const { data: s_ } = await supabase.auth.getSession();
+    const u = { user: s_.session?.user ?? null };
       if (!u.user) return;
       setEmail(u.user.email ?? "");
       const { data } = await supabase.from("profiles").select("display_name").eq("id", u.user.id).maybeSingle();
@@ -36,7 +37,8 @@ function SettingsPage() {
 
   const save = async () => {
     setSaving(true);
-    const { data: u } = await supabase.auth.getUser();
+    const { data: s_ } = await supabase.auth.getSession();
+    const u = { user: s_.session?.user ?? null };
     if (!u.user) { setSaving(false); return; }
     const { error } = await supabase.from("profiles").upsert({ id: u.user.id, display_name: displayName.trim() || null });
     setSaving(false);
