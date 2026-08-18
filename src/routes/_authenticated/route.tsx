@@ -6,9 +6,11 @@ import { supabase } from "@/integrations/supabase/client";
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
   beforeLoad: async () => {
-    const { data, error } = await supabase.auth.getUser();
-    if (error || !data.user) throw redirect({ to: "/auth" });
-    return { user: data.user };
+    // getSession() reads the locally cached session (no network round-trip),
+    // which keeps navigation instant. Data access is still protected by RLS.
+    const { data, error } = await supabase.auth.getSession();
+    if (error || !data.session?.user) throw redirect({ to: "/auth" });
+    return { user: data.session.user };
   },
   component: AuthedLayout,
 });

@@ -90,7 +90,8 @@ export function ToolRunner({
 
   const onSave = async () => {
     if (!result) return;
-    const { data: u } = await supabase.auth.getUser();
+    const { data: s_ } = await supabase.auth.getSession();
+    const u = { user: s_.session?.user ?? null };
     if (!u.user) return;
     const { error } = await supabase.from("tool_results").update({ saved: true }).eq("id", result.id);
     if (error) toast.error(error.message);
