@@ -40,7 +40,7 @@ function AuthPage() {
       if (tab === "signup") {
         const { error } = await supabase.auth.signUp({
           email, password,
-          options: { emailRedirectTo: `${window.location.origin}/dashboard` },
+          options: { emailRedirectTo: `${window.location.origin}/auth-callback` },
         });
         if (error) throw error;
         toast.success("Check your email to confirm your account");
@@ -61,7 +61,7 @@ function AuthPage() {
     setLoading(true);
     try {
       const result = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: window.location.origin,
+        redirect_uri: `${window.location.origin}/auth-callback`,
         extraParams: { prompt: "select_account" },
       });
       if (result.error) {
@@ -70,8 +70,18 @@ function AuthPage() {
         return;
       }
       if (result.redirected) return;
-      const { data } = await supabase.auth.getSession();
-      if (!data.session) {
+
+      // Popup flow: the session may take a moment to persist.
+      let session = null;
+      for (let i = 0; i < 20; i++) {
+        const { data } = await supabase.auth.getSession();
+        if (data.session) {
+          session = data.session;
+          break;
+        }
+        await new Promise((r) => setTimeout(r, 150));
+      }
+      if (!session) {
         toast.error("Could not complete Google sign in");
         setLoading(false);
         return;
