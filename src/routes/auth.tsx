@@ -40,7 +40,7 @@ function AuthPage() {
       if (tab === "signup") {
         const { error } = await supabase.auth.signUp({
           email, password,
-          options: { emailRedirectTo: `${window.location.origin}/dashboard` },
+          options: { emailRedirectTo: `${window.location.origin}/auth-callback` },
         });
         if (error) throw error;
         toast.success("Check your email to confirm your account");
