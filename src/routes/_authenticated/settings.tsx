@@ -10,13 +10,20 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { toast } from "sonner";
 import { Loader2, Moon, Sun } from "lucide-react";
 import { usePreferences, LANGUAGE_OPTIONS, type AppLanguage } from "@/lib/preferences";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { HistoryPanel } from "@/components/HistoryPanel";
 
 export const Route = createFileRoute("/_authenticated/settings")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    tab: search.tab === "history" ? ("history" as const) : ("general" as const),
+  }),
   head: () => ({ meta: [{ title: "Settings — OutlineCraft AI" }] }),
   component: SettingsPage,
 });
 
 function SettingsPage() {
+  const { tab } = Route.useSearch();
+  const navigate = Route.useNavigate();
   const { theme, setTheme, language, setLanguage } = usePreferences();
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
@@ -47,11 +54,23 @@ function SettingsPage() {
   };
 
   return (
-    <div className="max-w-2xl space-y-6">
-      <div>
+    <div className="space-y-6">
+      <div className="max-w-2xl">
         <h1 className="font-display text-3xl font-semibold">Settings</h1>
-        <p className="text-muted-foreground mt-1">Manage your account, theme and interface language.</p>
+        <p className="text-muted-foreground mt-1">Manage your account, theme, language and outline history.</p>
       </div>
+
+      <Tabs
+        value={tab}
+        onValueChange={(v) => navigate({ to: ".", search: { tab: v === "history" ? "history" : "general" } })}
+        className="space-y-6"
+      >
+        <TabsList>
+          <TabsTrigger value="general">General</TabsTrigger>
+          <TabsTrigger value="history">History</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="general" className="space-y-6 max-w-2xl">
 
       <Card className="surface-card">
         <CardHeader>
@@ -111,6 +130,12 @@ function SettingsPage() {
           )}
         </CardContent>
       </Card>
+        </TabsContent>
+
+        <TabsContent value="history">
+          <HistoryPanel />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

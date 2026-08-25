@@ -16,17 +16,12 @@ import { Route as AuthCallbackRouteImport } from './routes/auth-callback'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedCompetitorAnalysisRouteImport } from './routes/_authenticated/competitor-analysis'
 import { Route as AuthenticatedContentBriefRouteImport } from './routes/_authenticated/content-brief'
-import { Route as AuthenticatedContentCalendarRouteImport } from './routes/_authenticated/content-calendar'
 import { Route as AuthenticatedContentGapRouteImport } from './routes/_authenticated/content-gap'
 import { Route as AuthenticatedContentToolsRouteImport } from './routes/_authenticated/content-tools'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedExportCenterRouteImport } from './routes/_authenticated/export-center'
 import { Route as AuthenticatedFavoritesRouteImport } from './routes/_authenticated/favorites'
-import { Route as AuthenticatedHistoryRouteImport } from './routes/_authenticated/history'
-import { Route as AuthenticatedImageSuggestionsRouteImport } from './routes/_authenticated/image-suggestions'
-import { Route as AuthenticatedInternalLinksRouteImport } from './routes/_authenticated/internal-links'
 import { Route as AuthenticatedNewRouteImport } from './routes/_authenticated/new'
-import { Route as AuthenticatedSchemaGeneratorRouteImport } from './routes/_authenticated/schema-generator'
 import { Route as AuthenticatedSeoToolsRouteImport } from './routes/_authenticated/seo-tools'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 
@@ -66,12 +61,6 @@ const AuthenticatedContentBriefRoute =
     path: '/content-brief',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
-const AuthenticatedContentCalendarRoute =
-  AuthenticatedContentCalendarRouteImport.update({
-    id: '/content-calendar',
-    path: '/content-calendar',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedContentGapRoute = AuthenticatedContentGapRouteImport.update({
   id: '/content-gap',
   path: '/content-gap',
@@ -99,34 +88,11 @@ const AuthenticatedFavoritesRoute = AuthenticatedFavoritesRouteImport.update({
   path: '/favorites',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedHistoryRoute = AuthenticatedHistoryRouteImport.update({
-  id: '/history',
-  path: '/history',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedImageSuggestionsRoute =
-  AuthenticatedImageSuggestionsRouteImport.update({
-    id: '/image-suggestions',
-    path: '/image-suggestions',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedInternalLinksRoute =
-  AuthenticatedInternalLinksRouteImport.update({
-    id: '/internal-links',
-    path: '/internal-links',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedNewRoute = AuthenticatedNewRouteImport.update({
   id: '/new',
   path: '/new',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedSchemaGeneratorRoute =
-  AuthenticatedSchemaGeneratorRouteImport.update({
-    id: '/schema-generator',
-    path: '/schema-generator',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 const AuthenticatedSeoToolsRoute = AuthenticatedSeoToolsRouteImport.update({
   id: '/seo-tools',
   path: '/seo-tools',
@@ -145,17 +111,12 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/competitor-analysis': typeof AuthenticatedCompetitorAnalysisRoute
   '/content-brief': typeof AuthenticatedContentBriefRoute
-  '/content-calendar': typeof AuthenticatedContentCalendarRoute
   '/content-gap': typeof AuthenticatedContentGapRoute
   '/content-tools': typeof AuthenticatedContentToolsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/export-center': typeof AuthenticatedExportCenterRoute
   '/favorites': typeof AuthenticatedFavoritesRoute
-  '/history': typeof AuthenticatedHistoryRoute
-  '/image-suggestions': typeof AuthenticatedImageSuggestionsRoute
-  '/internal-links': typeof AuthenticatedInternalLinksRoute
   '/new': typeof AuthenticatedNewRoute
-  '/schema-generator': typeof AuthenticatedSchemaGeneratorRoute
   '/seo-tools': typeof AuthenticatedSeoToolsRoute
   '/settings': typeof AuthenticatedSettingsRoute
 }
@@ -166,17 +127,12 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/competitor-analysis': typeof AuthenticatedCompetitorAnalysisRoute
   '/content-brief': typeof AuthenticatedContentBriefRoute
-  '/content-calendar': typeof AuthenticatedContentCalendarRoute
   '/content-gap': typeof AuthenticatedContentGapRoute
   '/content-tools': typeof AuthenticatedContentToolsRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/export-center': typeof AuthenticatedExportCenterRoute
   '/favorites': typeof AuthenticatedFavoritesRoute
-  '/history': typeof AuthenticatedHistoryRoute
-  '/image-suggestions': typeof AuthenticatedImageSuggestionsRoute
-  '/internal-links': typeof AuthenticatedInternalLinksRoute
   '/new': typeof AuthenticatedNewRoute
-  '/schema-generator': typeof AuthenticatedSchemaGeneratorRoute
   '/seo-tools': typeof AuthenticatedSeoToolsRoute
   '/settings': typeof AuthenticatedSettingsRoute
 }
@@ -189,17 +145,12 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/competitor-analysis': typeof AuthenticatedCompetitorAnalysisRoute
   '/_authenticated/content-brief': typeof AuthenticatedContentBriefRoute
-  '/_authenticated/content-calendar': typeof AuthenticatedContentCalendarRoute
   '/_authenticated/content-gap': typeof AuthenticatedContentGapRoute
   '/_authenticated/content-tools': typeof AuthenticatedContentToolsRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/export-center': typeof AuthenticatedExportCenterRoute
   '/_authenticated/favorites': typeof AuthenticatedFavoritesRoute
-  '/_authenticated/history': typeof AuthenticatedHistoryRoute
-  '/_authenticated/image-suggestions': typeof AuthenticatedImageSuggestionsRoute
-  '/_authenticated/internal-links': typeof AuthenticatedInternalLinksRoute
   '/_authenticated/new': typeof AuthenticatedNewRoute
-  '/_authenticated/schema-generator': typeof AuthenticatedSchemaGeneratorRoute
   '/_authenticated/seo-tools': typeof AuthenticatedSeoToolsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
 }
@@ -212,17 +163,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/competitor-analysis'
     | '/content-brief'
-    | '/content-calendar'
     | '/content-gap'
     | '/content-tools'
     | '/dashboard'
     | '/export-center'
     | '/favorites'
-    | '/history'
-    | '/image-suggestions'
-    | '/internal-links'
     | '/new'
-    | '/schema-generator'
     | '/seo-tools'
     | '/settings'
   fileRoutesByTo: FileRoutesByTo
@@ -233,17 +179,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/competitor-analysis'
     | '/content-brief'
-    | '/content-calendar'
     | '/content-gap'
     | '/content-tools'
     | '/dashboard'
     | '/export-center'
     | '/favorites'
-    | '/history'
-    | '/image-suggestions'
-    | '/internal-links'
     | '/new'
-    | '/schema-generator'
     | '/seo-tools'
     | '/settings'
   id:
@@ -255,17 +196,12 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/_authenticated/competitor-analysis'
     | '/_authenticated/content-brief'
-    | '/_authenticated/content-calendar'
     | '/_authenticated/content-gap'
     | '/_authenticated/content-tools'
     | '/_authenticated/dashboard'
     | '/_authenticated/export-center'
     | '/_authenticated/favorites'
-    | '/_authenticated/history'
-    | '/_authenticated/image-suggestions'
-    | '/_authenticated/internal-links'
     | '/_authenticated/new'
-    | '/_authenticated/schema-generator'
     | '/_authenticated/seo-tools'
     | '/_authenticated/settings'
   fileRoutesById: FileRoutesById
@@ -329,13 +265,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedContentBriefRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/content-calendar': {
-      id: '/_authenticated/content-calendar'
-      path: '/content-calendar'
-      fullPath: '/content-calendar'
-      preLoaderRoute: typeof AuthenticatedContentCalendarRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/content-gap': {
       id: '/_authenticated/content-gap'
       path: '/content-gap'
@@ -371,39 +300,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedFavoritesRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/history': {
-      id: '/_authenticated/history'
-      path: '/history'
-      fullPath: '/history'
-      preLoaderRoute: typeof AuthenticatedHistoryRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/image-suggestions': {
-      id: '/_authenticated/image-suggestions'
-      path: '/image-suggestions'
-      fullPath: '/image-suggestions'
-      preLoaderRoute: typeof AuthenticatedImageSuggestionsRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/internal-links': {
-      id: '/_authenticated/internal-links'
-      path: '/internal-links'
-      fullPath: '/internal-links'
-      preLoaderRoute: typeof AuthenticatedInternalLinksRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
     '/_authenticated/new': {
       id: '/_authenticated/new'
       path: '/new'
       fullPath: '/new'
       preLoaderRoute: typeof AuthenticatedNewRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/schema-generator': {
-      id: '/_authenticated/schema-generator'
-      path: '/schema-generator'
-      fullPath: '/schema-generator'
-      preLoaderRoute: typeof AuthenticatedSchemaGeneratorRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/seo-tools': {
@@ -426,17 +327,12 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedCompetitorAnalysisRoute: typeof AuthenticatedCompetitorAnalysisRoute
   AuthenticatedContentBriefRoute: typeof AuthenticatedContentBriefRoute
-  AuthenticatedContentCalendarRoute: typeof AuthenticatedContentCalendarRoute
   AuthenticatedContentGapRoute: typeof AuthenticatedContentGapRoute
   AuthenticatedContentToolsRoute: typeof AuthenticatedContentToolsRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedExportCenterRoute: typeof AuthenticatedExportCenterRoute
   AuthenticatedFavoritesRoute: typeof AuthenticatedFavoritesRoute
-  AuthenticatedHistoryRoute: typeof AuthenticatedHistoryRoute
-  AuthenticatedImageSuggestionsRoute: typeof AuthenticatedImageSuggestionsRoute
-  AuthenticatedInternalLinksRoute: typeof AuthenticatedInternalLinksRoute
   AuthenticatedNewRoute: typeof AuthenticatedNewRoute
-  AuthenticatedSchemaGeneratorRoute: typeof AuthenticatedSchemaGeneratorRoute
   AuthenticatedSeoToolsRoute: typeof AuthenticatedSeoToolsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
 }
@@ -444,17 +340,12 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedCompetitorAnalysisRoute: AuthenticatedCompetitorAnalysisRoute,
   AuthenticatedContentBriefRoute: AuthenticatedContentBriefRoute,
-  AuthenticatedContentCalendarRoute: AuthenticatedContentCalendarRoute,
   AuthenticatedContentGapRoute: AuthenticatedContentGapRoute,
   AuthenticatedContentToolsRoute: AuthenticatedContentToolsRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedExportCenterRoute: AuthenticatedExportCenterRoute,
   AuthenticatedFavoritesRoute: AuthenticatedFavoritesRoute,
-  AuthenticatedHistoryRoute: AuthenticatedHistoryRoute,
-  AuthenticatedImageSuggestionsRoute: AuthenticatedImageSuggestionsRoute,
-  AuthenticatedInternalLinksRoute: AuthenticatedInternalLinksRoute,
   AuthenticatedNewRoute: AuthenticatedNewRoute,
-  AuthenticatedSchemaGeneratorRoute: AuthenticatedSchemaGeneratorRoute,
   AuthenticatedSeoToolsRoute: AuthenticatedSeoToolsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
 }
