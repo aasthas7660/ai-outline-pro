@@ -84,7 +84,7 @@ export function HistoryPanel() {
   return (
     <div className="grid gap-6 lg:grid-cols-[400px_1fr] max-w-7xl">
       <div className="space-y-3">
-        <h1 className="font-display text-2xl font-semibold">History</h1>
+        <h2 className="font-display text-2xl font-semibold">History</h2>
 
         <Card className="surface-card">
           <CardContent className="p-3 space-y-2.5">

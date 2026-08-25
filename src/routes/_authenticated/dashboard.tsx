@@ -50,7 +50,7 @@ function Dashboard() {
       <Card className="surface-card">
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Recent outlines</CardTitle>
-          <Button asChild variant="ghost" size="sm"><Link to="/history">View all <ArrowRight className="ml-1 h-3 w-3" /></Link></Button>
+          <Button asChild variant="ghost" size="sm"><Link to="/settings" search={{ tab: "history" }}>View all <ArrowRight className="ml-1 h-3 w-3" /></Link></Button>
         </CardHeader>
         <CardContent>
           {stats.isLoading ? (
@@ -65,7 +65,7 @@ function Dashboard() {
                     <p className="font-medium truncate">{o.topic}</p>
                     <p className="text-xs text-muted-foreground">{formatDistanceToNow(new Date(o.created_at), { addSuffix: true })}</p>
                   </div>
-                  <Button asChild variant="ghost" size="sm"><Link to="/history">Open</Link></Button>
+                  <Button asChild variant="ghost" size="sm"><Link to="/settings" search={{ tab: "history" }}>Open</Link></Button>
                 </li>
               ))}
             </ul>
