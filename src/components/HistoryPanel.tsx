@@ -1,4 +1,3 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { useMemo, useState } from "react";
@@ -15,10 +14,6 @@ import { formatDistanceToNow } from "date-fns";
 import { Copy, Star, Trash2, FileText, Search as SearchIcon } from "lucide-react";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/history")({
-  head: () => ({ meta: [{ title: "History — OutlineCraft AI" }] }),
-  component: HistoryPage,
-});
 
 type Row = {
   id: string;
@@ -33,7 +28,7 @@ type Row = {
 
 const ANY = "__any__";
 
-function HistoryPage() {
+export function HistoryPanel() {
   const qc = useQueryClient();
   const [selected, setSelected] = useState<Row | null>(null);
   const [search, setSearch] = useState("");
