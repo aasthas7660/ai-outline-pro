@@ -24,9 +24,12 @@ function AuthCallback() {
 
   useEffect(() => {
     let done = false;
+    let timer: ReturnType<typeof setInterval> | undefined;
+
     const go = () => {
       if (done) return;
       done = true;
+      if (timer) clearInterval(timer);
       navigate({ to: "/dashboard", replace: true });
     };
 
@@ -34,26 +37,43 @@ function AuthCallback() {
       if (session) go();
     });
 
-    // Poll briefly: the OAuth helper may still be persisting the session.
+    // Poll briefly: covers implicit/hash flows and late session persistence.
     let tries = 0;
-    const timer = setInterval(async () => {
-      tries += 1;
-      const { data } = await supabase.auth.getSession();
-      if (data.session) {
-        clearInterval(timer);
-        go();
-      } else if (tries > 20) {
-        clearInterval(timer);
-        setMessage("Could not complete sign in. Redirecting…");
-        if (!done) {
-          done = true;
-          navigate({ to: "/auth", replace: true });
+    const startPolling = () => {
+      timer = setInterval(async () => {
+        tries += 1;
+        const { data } = await supabase.auth.getSession();
+        if (data.session) {
+          go();
+        } else if (tries > 20) {
+          if (timer) clearInterval(timer);
+          setMessage("Could not complete sign in. Redirecting…");
+          if (!done) {
+            done = true;
+            navigate({ to: "/auth", replace: true });
+          }
+        }
+      }, 250);
+    };
+
+    (async () => {
+      // PKCE flow: Supabase redirects back with ?code=... — exchange it for a session.
+      const code = new URLSearchParams(window.location.search).get("code");
+      if (code) {
+        try {
+          await supabase.auth.exchangeCodeForSession(code);
+          // onAuthStateChange fires with the new session and navigates.
+          window.history.replaceState({}, "", window.location.pathname);
+          return;
+        } catch {
+          // Already exchanged or invalid — fall back to session polling.
         }
       }
-    }, 250);
+      startPolling();
+    })();
 
     return () => {
-      clearInterval(timer);
+      if (timer) clearInterval(timer);
       sub.subscription.unsubscribe();
     };
   }, [navigate]);
