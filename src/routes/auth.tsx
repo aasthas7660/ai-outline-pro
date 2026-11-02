@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
-import { lovable } from "@/integrations/lovable";
 import { toast } from "sonner";
 import { Sparkles, Loader2 } from "lucide-react";
 
@@ -60,34 +59,17 @@ function AuthPage() {
   const handleGoogle = async () => {
     setLoading(true);
     try {
-      const result = await lovable.auth.signInWithOAuth("google", {
-        redirect_uri: `${window.location.origin}/auth-callback`,
-        extraParams: { prompt: "select_account" },
+      // Direct Supabase OAuth (works on any deployment, including Vercel).
+      // The browser navigates away to Google; Supabase redirects back to /auth-callback.
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth-callback`,
+          queryParams: { prompt: "select_account" },
+        },
       });
-      if (result.error) {
-        toast.error(result.error instanceof Error ? result.error.message : "Google sign in failed");
-        setLoading(false);
-        return;
-      }
-      if (result.redirected) return;
-
-      // Popup flow: the session may take a moment to persist.
-      let session = null;
-      for (let i = 0; i < 20; i++) {
-        const { data } = await supabase.auth.getSession();
-        if (data.session) {
-          session = data.session;
-          break;
-        }
-        await new Promise((r) => setTimeout(r, 150));
-      }
-      if (!session) {
-        toast.error("Could not complete Google sign in");
-        setLoading(false);
-        return;
-      }
-      toast.success("Welcome!");
-      navigate({ to: "/dashboard" });
+      if (error) throw error;
+      // Redirect is in progress — nothing else to do here.
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Google sign in failed");
       setLoading(false);
