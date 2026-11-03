@@ -20,11 +20,12 @@ function createSupabaseClient() {
   }
 
   return createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-    auth: {
-      storage: brokeredPreviewStorage(),
-      persistSession: true,
-      autoRefreshToken: true,
-    }
+   auth: {
+  storage: brokeredPreviewStorage(),
+  persistSession: true,
+  autoRefreshToken: true,
+  detectSessionInUrl: false,
+}
   });
 }
 

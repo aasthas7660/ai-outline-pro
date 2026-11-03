@@ -8,11 +8,10 @@ export const Route = createFileRoute("/auth-callback")({
   head: () => ({
     meta: [
       { title: "Signing you in — OutlineCraft AI" },
-      { name: "description", content: "Completing your secure sign-in to OutlineCraft AI." },
-      { property: "og:title", content: "Signing you in — OutlineCraft AI" },
-      { property: "og:description", content: "Completing your secure sign-in to OutlineCraft AI." },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
+      {
+        name: "description",
+        content: "Completing your secure sign-in to OutlineCraft AI.",
+      },
     ],
   }),
   component: AuthCallback,
@@ -23,58 +22,60 @@ function AuthCallback() {
   const [message, setMessage] = useState("Finishing sign in…");
 
   useEffect(() => {
-    let done = false;
-    let timer: ReturnType<typeof setInterval> | undefined;
+    let active = true;
 
-    const go = () => {
-      if (done) return;
-      done = true;
-      if (timer) clearInterval(timer);
-      navigate({ to: "/dashboard", replace: true });
-    };
+    const finishSignIn = async () => {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get("code");
 
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, session) => {
-      if (session) go();
-    });
+        if (code) {
+          const { error } =
+            await supabase.auth.exchangeCodeForSession(code);
 
-    // Poll briefly: covers implicit/hash flows and late session persistence.
-    let tries = 0;
-    const startPolling = () => {
-      timer = setInterval(async () => {
-        tries += 1;
-        const { data } = await supabase.auth.getSession();
-        if (data.session) {
-          go();
-        } else if (tries > 20) {
-          if (timer) clearInterval(timer);
-          setMessage("Could not complete sign in. Redirecting…");
-          if (!done) {
-            done = true;
+          if (error) throw error;
+        }
+
+        const { data, error } = await supabase.auth.getSession();
+
+        if (error) throw error;
+
+        if (!data.session) {
+          throw new Error(
+            "No active session was found. Please try signing in again."
+          );
+        }
+
+        if (!active) return;
+
+        window.history.replaceState(
+          {},
+          document.title,
+          "/auth-callback"
+        );
+
+        navigate({ to: "/dashboard", replace: true });
+      } catch (err) {
+        if (!active) return;
+
+        setMessage(
+          err instanceof Error
+            ? `${err.message} Redirecting to sign in…`
+            : "Could not complete sign in. Redirecting…"
+        );
+
+        window.setTimeout(() => {
+          if (active) {
             navigate({ to: "/auth", replace: true });
           }
-        }
-      }, 250);
+        }, 2500);
+      }
     };
 
-    (async () => {
-      // PKCE flow: Supabase redirects back with ?code=... — exchange it for a session.
-      const code = new URLSearchParams(window.location.search).get("code");
-      if (code) {
-        try {
-          await supabase.auth.exchangeCodeForSession(code);
-          // onAuthStateChange fires with the new session and navigates.
-          window.history.replaceState({}, "", window.location.pathname);
-          return;
-        } catch {
-          // Already exchanged or invalid — fall back to session polling.
-        }
-      }
-      startPolling();
-    })();
+    void finishSignIn();
 
     return () => {
-      if (timer) clearInterval(timer);
-      sub.subscription.unsubscribe();
+      active = false;
     };
   }, [navigate]);
 

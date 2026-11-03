@@ -57,24 +57,52 @@ function AuthPage() {
   };
 
   const handleGoogle = async () => {
-    setLoading(true);
-    try {
-      // Direct Supabase OAuth (works on any deployment, including Vercel).
-      // The browser navigates away to Google; Supabase redirects back to /auth-callback.
-      const { error } = await supabase.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo: `${window.location.origin}/auth-callback`,
-          queryParams: { prompt: "select_account" },
+  setLoading(true);
+
+  try {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth-callback`,
+        queryParams: {
+          prompt: "select_account",
         },
-      });
-      if (error) throw error;
-      // Redirect is in progress — nothing else to do here.
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Google sign in failed");
-      setLoading(false);
-    }
-  };
+      },
+    });
+
+    if (error) throw error;
+    // The browser will redirect to Google.
+  } catch (err) {
+    toast.error(
+      err instanceof Error ? err.message : "Google sign in failed"
+    );
+    setLoading(false);
+  }
+};  
+
+setLoading(true);
+
+  try {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${window.location.origin}/auth-callback`,
+        queryParams: {
+          prompt: "select_account",
+        },
+      },
+    });
+
+    if (error) throw error;
+
+  } catch (err) {
+    toast.error(
+      err instanceof Error ? err.message : "Google sign in failed"
+    );
+    setLoading(false);
+  }
+};
+>>>>>>> e55553e (Fix Google OAuth with Supabase)
 
   const handleReset = async () => {
     try { emailSchema.parse(email); } catch { return toast.error("Enter your email above first"); }
