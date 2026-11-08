@@ -1,167 +1,82 @@
-# Outline AI Studio
+# ✨ AI Outline Pro
 
-Build a modern SaaS web application called OutlineCraft AI.
+**Plan smarter. Structure better. Create content with confidence.**
 
-Purpose:
-Help bloggers generate well-structured blog outlines using AI.
+AI Outline Pro is an AI-powered blogging assistant designed to help bloggers turn their ideas and keywords into well-structured content outlines. It aims to simplify the content planning process and help writers organize their thoughts before writing a complete blog post.
 
-Tech Stack:
+🌐 **Live Website:** [AI Outline Pro](https://ai-outline-pro.lovable.app/)
 
-Next.js 15
+---
 
-TypeScript
+## 🎯 Project Purpose
 
-Tailwind CSS
+Creating a well-structured blog post starts with a good outline. However, planning headings, organizing topics, and maintaining a logical content flow can be time-consuming.
 
-shadcn/ui
+AI Outline Pro aims to make this process easier by providing an AI-assisted environment for blog outline creation and content planning.
 
-Supabase
+## ✨ Key Highlights
 
-Anthropic Claude API
+- 🤖 **AI-Powered Outlining:** Generate structured blog outlines with AI assistance.
+- 📝 **Content Planning:** Organize blog ideas into a logical structure.
+- 🔍 **Keyword-Focused Planning:** Build content around relevant topics and keywords.
+- 📚 **Blog Structure:** Plan headings and subheadings before writing.
+- 🔐 **User Authentication:** Account access through Supabase authentication.
+- 🔑 **Account Management:** Email signup, login, and password reset.
+- 🌐 **Google Authentication:** Google sign-in integration.
 
-Design:
+## 🛠️ Tech Stack
 
-Professional SaaS UI
+| Technology | Purpose |
+|---|---|
+| React | Frontend development |
+| TypeScript | Type-safe development |
+| Vite | Development and build tooling |
+| Tailwind CSS | Styling and responsive design |
+| Supabase | Authentication and backend services |
+| TanStack Router | Application routing |
+| Lucide | Icons |
+| Vercel | Deployment |
 
-Responsive
+## 🔐 Authentication
 
-Dark mode
+AI Outline Pro includes an authentication system with:
 
-Smooth animations
+- Email and password registration.
+- User login.
+- Password reset.
+- Google OAuth integration.
+- Protected application routes.
+- Session management through Supabase.
 
-Sidebar navigation
+## 🚀 Live Demo
 
-Loading states
+Explore the application:
 
-Toast notifications
+[✨ Visit AI Outline Pro](https://ai-outline-pro.lovable.app/)
 
-Pages:
+## 💡 What I Learned
 
-Landing Page
+Through this project, I explored:
 
-Hero section
+- Building a React application with TypeScript.
+- Working with modern frontend development tools.
+- Integrating Supabase authentication.
+- Implementing application routing.
+- Working with OAuth authentication.
+- Deploying a web application using Vercel.
+- Understanding how AI can assist with content planning.
 
-Features section
+## 🌱 Future Improvements
 
-How it works
+- More advanced outline customization.
+- Saving and organizing generated outlines.
+- Exporting outlines in different formats.
+- Additional AI-assisted writing features.
 
-FAQ section
+---
 
-CTA section
-
-Footer
-
-Authentication
-
-Sign up
-
-Login
-
-Google authentication
-
-Dashboard
-
-Sidebar:
-
-Dashboard
-
-New Outline
-
-History
-
-Favorites
-
-Settings
-
-Dashboard cards:
-
-Total generations
-
-Recent outlines
-
-Favorites
-
-Core Feature:
-
-Users can input:
-
-Blog topic
-
-Language
-
-Tone
-
-Target audience
-
-Content length
-
-Generate:
-
-H1 title
-
-H2 headings
-
-H3 subheadings
-
-Introduction section
-
-Conclusion section
-
-Related topics
-
-Key takeaways
-
-5 FAQs
-
-Buttons:
-
-Generate
-
-Copy
-
-Save
-
-Favorite
-
-Regenerate
-
-Database Tables:
-Users
-Outlines
-Favorites
-History
-
-Requirements:
-
-TypeScript everywhere
-
-Reusable components
-
-Error handling
-
-Loading skeletons
-
-Production-ready folder structure
-
-This project was built with [Lovable](https://lovable.dev).
-
-**Live app**: https://ai-outline-pro.lovable.app
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/be21549b-f87a-4b7a-883b-bfa3612aeeb7).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
-## Development
-
-Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
-```sh
-git clone <this-repository-url>
-cd <repository-name>
-npm i
-npm run dev
-```
+<p align="center">
+  Made with ❤️
+  <br/>
+  <b>Think • Outline • Create</b>
+</p>
